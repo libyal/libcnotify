@@ -1,0 +1,121 @@
+/*
+ * Library to support cross-platform C error functions
+ *
+ * Copyright (c) 2008-2012, Joachim Metz <jbmetz@users.sourceforge.net>
+ *
+ * Refer to AUTHORS for acknowledgements.
+ *
+ * This software is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this software.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#if !defined( _LIBCNOTIFY_H )
+#define _LIBCNOTIFY_H
+
+#include <libcnotify/definitions.h>
+#include <libcnotify/error.h>
+#include <libcnotify/extern.h>
+#include <libcnotify/features.h>
+#include <libcnotify/types.h>
+
+#if defined( __cplusplus )
+extern "C" {
+#endif
+
+/* -------------------------------------------------------------------------
+ * Support functions
+ * ------------------------------------------------------------------------- */
+
+/* Returns the library version as a string
+ */
+LIBCNOTIFY_EXTERN \
+const char *libcnotify_get_version(
+             void );
+
+/* -------------------------------------------------------------------------
+ * Stream functions
+ * ------------------------------------------------------------------------- */
+
+/* Set the stream
+ * Returns 1 if successful or -1 on error
+ */
+LIBCNOTIFY_EXTERN \
+int libcnotify_stream_set(
+     FILE *stream,
+     libcnotify_error_t **error );
+
+/* Opens the notification stream using a filename
+ * The stream is opened in append mode
+ * Returns 1 if successful or -1 on error
+ */
+LIBCNOTIFY_EXTERN \
+int libcnotify_stream_open(
+     const char *filename,
+     libcnotify_error_t **error );
+
+/* Closes the notification stream if opened using a filename
+ * Returns 0 if successful or -1 on error
+ */
+LIBCNOTIFY_EXTERN \
+int libcnotify_stream_close(
+     libcnotify_error_t **error );
+
+/* -------------------------------------------------------------------------
+ * Verbose functions
+ * ------------------------------------------------------------------------- */
+
+/* Value to indicate if the verbose notification is active
+ */
+LIBCNOTIFY_EXTERN \
+int libcnotify_verbose;
+
+/* Sets the verbose notification
+ */
+LIBCNOTIFY_EXTERN \
+void libcnotify_verbose_set(
+      int verbose );
+
+/* -------------------------------------------------------------------------
+ * Print functions
+ * ------------------------------------------------------------------------- */
+
+/* Print a formatted string on the notify stream
+ * Returns the number of printed characters if successful or -1 on error
+ */
+LIBCNOTIFY_EXTERN \
+int libcnotify_printf(
+     const char *format,
+     ... );
+
+/* Prints the data on the notify stream
+ * Returns the number of printed characters if successful or -1 on error
+ */
+LIBCNOTIFY_EXTERN \
+int libcnotify_print_data(
+     const uint8_t *data,
+     size_t data_size,
+     uint8_t print_data_flags );
+
+/* Prints the backtrace of the error on the notify stream
+ * Returns the number of printed characters if successful or -1 on error
+ */
+LIBCNOTIFY_EXTERN \
+int libcnotify_print_error_backtrace(
+     libcnotify_error_t *error );
+
+#if defined( __cplusplus )
+}
+#endif
+
+#endif
+
