@@ -1,9 +1,10 @@
 TODO
-* update acinclude.m4
-* update include header
 * update man pages
 * update msvscpp
 * add borland5 and codegear files
+
+20120408
+* updated dependencies
 
 20120407
 * Worked on stand-alone version
