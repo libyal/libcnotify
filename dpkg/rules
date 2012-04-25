@@ -31,6 +31,8 @@ install_libcnotify_dev:
 	install -p -m755 debian/tmp/usr/lib/pkgconfig/* debian/libcnotify-dev/usr/lib/pkgconfig
 	install -p -m755 debian/tmp/usr/share/man/man3/* debian/libcnotify-dev/usr/share/man/man3
 
+override_dh_auto_test:
+
 override_dh_installinit: install_libcnotify install_libcnotify_dev
 
 override_dh_installmenu:
@@ -58,4 +60,10 @@ override_dh_gconf:
 override_dh_icons:
 
 override_dh_perl:
+
+override_dh_shlibdeps:
+	dh_shlibdeps -Llibcnotify -l${PWD}/debian/tmp/usr/lib
+
+override_dh_makeshlibs:
+	dh_makeshlibs -Xlibcnotify-dev
 
