@@ -2,8 +2,8 @@ AC_PREREQ( 2.59 )
 
 AC_INIT(
  [libcnotify],
- [20120425],
- [jbmetz@users.sourceforge.net])
+ [20120507],
+ [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
  [include/libcnotify.h.in])

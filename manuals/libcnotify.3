@@ -1,4 +1,4 @@
-.Dd April 7, 2012
+.Dd May 7, 2012
 .Dt libcnotify 3
 .Os libcnotify
 .Sh NAME
@@ -13,25 +13,26 @@ Support functions
 .Ft const char *
 .Fn libcnotify_get_version "void"
 .Pp
-Error functions
-.Ft void
-.Fn libcnotify_error_free "libcnotify_error_t **error"
-.Ft void
-.Fn libcnotify_error_set "libcnotify_error_t **error, int error_domain, int error_code, const char *format_string, ..."
+Stream functions
 .Ft int
-.Fn libcnotify_error_matches "libcnotify_error_t *error, int error_domain, int error_code"
+.Fn libcnotify_stream_set "FILE *stream, libcnotify_error_t **error"
 .Ft int
-.Fn libcnotify_error_fprint "libcnotify_error_t *error, FILE *stream"
+.Fn libcnotify_stream_open "const char *filename, libcnotify_error_t **error"
 .Ft int
-.Fn libcnotify_error_sprint "libcnotify_error_t *error, char *string, size_t size"
-.Ft int
-.Fn libcnotify_error_backtrace_fprint "libcnotify_error_t *error, FILE *stream"
-.Ft int
-.Fn libcnotify_error_backtrace_sprint "libcnotify_error_t *error, char *string, size_t size"
+.Fn libcnotify_stream_close "libcnotify_error_t **error"
 .Pp
-System error functions
+Verbose functions
 .Ft void
-.Fn libcnotify_system_set_error "libcnotify_error_t **error, int error_domain, int error_code, uint32_t system_error_code, const char *format_string, ..."
+.Fn libcnotify_verbose_set "int verbose"
+.Pp
+Print functions
+.Ft int
+.Fn libcnotify_printf "const char *format, ..."
+.Ft int
+.Fn libcnotify_print_data "const uint8_t *data, size_t data_size, uint8_t print_data_flags"
+.Ft int
+.Fn libcnotify_print_error_backtrace "libcnotify_error_t *error"
+.Pp
 .Sh DESCRIPTION
 The
 .Fn libcnotify_get_version
@@ -43,12 +44,12 @@ None
 .Sh FILES
 None
 .Sh BUGS
-Please report bugs of any kind to <jbmetz@users.sourceforge.net> or on the project website:
-http://libctype.sourceforge.net
+Please report bugs of any kind to <joachim.metz@gmail.com> or on the project website:
+http://code.google.com/p/libclibs/
 .Sh AUTHOR
 These man pages were written by Joachim Metz.
 .Sh COPYRIGHT
-Copyright 2008-2012 Joachim Metz <jbmetz@users.sourceforge.net>.
+Copyright 2008-2012 Joachim Metz <joachim.metz@gmail.com>.
 This is free software; see the source for copying conditions. There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 .Sh SEE ALSO
 the libcnotify.h include file

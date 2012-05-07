@@ -1,7 +1,10 @@
 TODO
-* update man pages
 * update msvscpp
 * add borland5 and codegear files
+
+20120507
+* email and project site change
+* updated man pages
 
 20120425
 * fixes for pkg-config detection of libraries
