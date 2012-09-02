@@ -198,6 +198,10 @@ typedef int64_t off64_t;
 /* The following type definitions hide internal data structures
  */
 
+/* No types
+typedef intptr_t libcnotify_dummy_t;
+ */
+
 #ifdef __cplusplus
 }
 #endif

@@ -25,22 +25,21 @@
 #include <common.h>
 #include <types.h>
 
-/* Define HAVE_LOCAL_LIBCSTRING for local use of libcstring
+/* Define HAVE_LOCAL_LIBCNOTIFY for local use of libcstring
  * The definitions in <libcstring/types.h> are copied here
  * for local use of libcstring
  */
-#if defined( HAVE_LOCAL_LIBCSTRING )
+#if defined( HAVE_LOCAL_LIBCNOTIFY )
 
 /* The following type definitions hide internal data structures
  */
-typedef intptr_t libcnotify_error_t;
 
-/* Currently not supported
+/* No types
 #if defined( HAVE_DEBUG_OUTPUT ) && !defined( WINAPI )
-typedef struct libcnotify_error {}	libcnotify_error_t;
+typedef struct libcnotify_dummy {}	libcnotify_dummy_t;
 
 #else
-typedef intptr_t libcnotify_error_t;
+typedef intptr_t libcnotify_dummy_t;
 
 #endif
 */
