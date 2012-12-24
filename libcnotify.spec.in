@@ -5,7 +5,7 @@ Summary: Library to support cross-platform C notification functions
 Group: System Environment/Libraries
 License: LGPL
 Source: %{name}-%{version}.tar.gz
-URL: http://code.google.com/p/libclibs/\0"
+URL: http://code.google.com/p/libcnotify/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 @libcnotify_spec_requires@ @ax_libcerror_spec_requires@ @ax_libcstring_spec_requires@
 @libcnotify_spec_build_requires@ @ax_libcerror_spec_build_requires@ @ax_libcstring_spec_build_requires@
