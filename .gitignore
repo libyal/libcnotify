@@ -93,3 +93,4 @@ Makefile.in
 /libcnotify/libcnotify_definitions.h
 # Local library dependencies specific files
 /libcerror
+/libcstring

@@ -1,6 +1,9 @@
 TODO
-* update msvscpp files
 * add borland5 and codegear files
+
+20121224
+* added .gitignore
+* updated msvscpp files
 
 20120919
 * updated dependencies
