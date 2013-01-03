@@ -24,7 +24,7 @@ BEGIN
       VALUE "FileDescription",		"Library to support cross-platform C notification functions\0"
       VALUE "FileVersion",		"@VERSION@" "\0"
       VALUE "InternalName",		"libcnotify.dll\0"
-      VALUE "LegalCopyright",		"(c) 2008-2012 Joachim Metz <joachim.metz@gmail.com>\0"
+      VALUE "LegalCopyright",		"(c) 2008-2013 Joachim Metz <joachim.metz@gmail.com>\0"
       VALUE "OriginalFilename",		"libcnotify.dll\0"
       VALUE "ProductName",		"libcnotify\0"
       VALUE "ProductVersion",		"@VERSION@" "\0"
