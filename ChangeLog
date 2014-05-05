@@ -1,5 +1,8 @@
 TODO
 
+20140505
+* fixes to build static library with mingw and cygwin
+
 20140105
 * updated dependencies
 * 2014 update
