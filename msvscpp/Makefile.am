@@ -1,6 +1,6 @@
 MSVSCPP_FILES = \
 	libcerror/libcerror.vcproj \
-	libcnotify_dll/libcnotify_dll.vcproj \
+	libcnotify/libcnotify.vcproj \
 	libcstring/libcstring.vcproj \
 	libcnotify.sln
 
