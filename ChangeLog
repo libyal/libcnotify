@@ -1,5 +1,8 @@
 TODO
 
+20140730
+* updated dpkg files
+
 20140505
 * fixes to build static library with mingw and cygwin
 
