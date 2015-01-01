@@ -1,4 +1,4 @@
-.Dd January 5, 2014
+.Dd January  1, 2015
 .Dt libcnotify 3
 .Os libcnotify
 .Sh NAME
@@ -32,24 +32,25 @@ Print functions
 .Fn libcnotify_print_data "const uint8_t *data, size_t data_size, uint8_t print_data_flags"
 .Ft int
 .Fn libcnotify_print_error_backtrace "libcnotify_error_t *error"
-.Pp
 .Sh DESCRIPTION
 The
 .Fn libcnotify_get_version
 function is used to retrieve the library version.
 .Sh RETURN VALUES
-Most of the functions return NULL or -1 on error, dependent on the return type. For the actual return values refer to libcnotify.h
+Most of the functions return NULL or -1 on error, dependent on the return type.
+For the actual return values see "libcnotify.h".
 .Sh ENVIRONMENT
 None
 .Sh FILES
 None
 .Sh BUGS
-Please report bugs of any kind to <joachim.metz@gmail.com> or on the project website:
-https://github.com/libyal/libcnotify
+Please report bugs of any kind on the project issue tracker: https://github.com/libyal/libcnotify/issues
 .Sh AUTHOR
-These man pages were written by Joachim Metz.
+These man pages are generated from "libcnotify.h".
 .Sh COPYRIGHT
-Copyright 2008-2014, Joachim Metz <joachim.metz@gmail.com>.
-This is free software; see the source for copying conditions. There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+Copyright (C) 2008-2015, Joachim Metz <joachim.metz@gmail.com>.
+
+This is free software; see the source for copying conditions.
+There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 .Sh SEE ALSO
 the libcnotify.h include file
