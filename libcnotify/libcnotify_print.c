@@ -134,8 +134,9 @@ int libcnotify_print_data(
 	while( data_iterator < data_size )
 	{
 		if( ( ( print_data_flags & LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA ) != 0 )
+		 && ( data_size >= 32 )
 		 && ( data_iterator >= 16 )
-		 && ( ( data_iterator + 32 ) <= data_size ) )
+		 && ( data_iterator <= ( data_size - 32 ) ) )
 		{
 			if( ( memory_compare(
 			       &( data[ data_iterator - 16 ] ),

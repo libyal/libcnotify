@@ -2,7 +2,7 @@ AC_PREREQ( 2.59 )
 
 AC_INIT(
  [libcnotify],
- [20150101],
+ [20150613],
  [joachim.metz@gmail.com])
 
 AC_CONFIG_SRCDIR(
