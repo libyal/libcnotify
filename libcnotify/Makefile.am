@@ -19,7 +19,7 @@ libcnotify_la_SOURCES = \
 	libcnotify_unused.h \
 	libcnotify_verbose.c libcnotify_verbose.h
 
-libcnotify_la_LIBADD  = \
+libcnotify_la_LIBADD = \
 	@LIBCSTRING_LIBADD@ \
 	@LIBCERROR_LIBADD@
 
