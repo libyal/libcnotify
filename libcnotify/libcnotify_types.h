@@ -19,15 +19,15 @@
  * along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBCNOTIFY_TYPES_H )
-#define _LIBCNOTIFY_TYPES_H
+#if !defined( _LIBCNOTIFY_INTERNAL_TYPES_H )
+#define _LIBCNOTIFY_INTERNAL_TYPES_H
 
 #include <common.h>
 #include <types.h>
 
-/* Define HAVE_LOCAL_LIBCNOTIFY for local use of libcstring
- * The definitions in <libcstring/types.h> are copied here
- * for local use of libcstring
+/* Define HAVE_LOCAL_LIBCNOTIFY for local use of libcnotify
+ * The definitions in <libcnotify/types.h> are copied here
+ * for local use of libcnotify
  */
 #if defined( HAVE_LOCAL_LIBCNOTIFY )
 
@@ -44,7 +44,7 @@ typedef intptr_t libcnotify_dummy_t;
 #endif
 */
 
-#endif
+#endif /* defined( HAVE_LOCAL_LIBCNOTIFY ) */
 
-#endif
+#endif /* !defined( _LIBCNOTIFY_INTERNAL_TYPES_H ) */
 
