@@ -116,6 +116,8 @@ stamp-h[1-9]
 /include/libcnotify/types.h
 /libcnotify/libcnotify.rc
 /libcnotify/libcnotify_definitions.h
+/tests/cnotify_test_get_version
+/tests/cnotify_test_stream_set
 /tests/tmp*
 
 # Local library dependencies specific files

@@ -1,5 +1,5 @@
 /*
- * Library stream set test program
+ * Library get version test program
  *
  * Copyright (C) 2008-2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -26,7 +26,6 @@
 #include <stdlib.h>
 #endif
 
-#include "cnotify_test_libcerror.h"
 #include "cnotify_test_libcnotify.h"
 #include "cnotify_test_libcstring.h"
 
@@ -38,8 +37,7 @@ int wmain( int argc, wchar_t * const argv[] )
 int main( int argc, char * const argv[] )
 #endif
 {
-	libcerror_error_t *error = NULL;
-	int codepage             = 0;
+	const char *version_string = NULL;
 
 	if( argc != 1 )
 	{
@@ -49,28 +47,15 @@ int main( int argc, char * const argv[] )
 
 		return( EXIT_FAILURE );
 	}
-	if( libcnotify_stream_set(
-	     stderr,
-	     &error ) != 1 )
-	{
-		fprintf(
-		 stderr,
-		 "Unable to set stream.\n" );
+	version_string = libcnotify_get_version();
 
-		goto on_error;
+	if( libcstring_narrow_string_compare(
+	     version_string,
+	     LIBCNOTIFY_VERSION_STRING,
+	     9 ) != 0 )
+	{
+		return( EXIT_FAILURE );
 	}
 	return( EXIT_SUCCESS );
-
-on_error:
-	if( error != NULL )
-	{
-		libcerror_error_backtrace_fprint(
-		 error,
-		 stderr );
-
-		libcerror_error_free(
-		 &error );
-	}
-	return( EXIT_FAILURE );
 }
 
