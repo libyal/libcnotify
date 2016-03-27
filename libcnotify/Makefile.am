@@ -15,7 +15,6 @@ libcnotify_la_SOURCES = \
 	libcnotify_print.c libcnotify_print.h \
 	libcnotify_stream.c libcnotify_stream.h \
 	libcnotify_support.c libcnotify_support.h \
-	libcnotify_types.h \
 	libcnotify_unused.h \
 	libcnotify_verbose.c libcnotify_verbose.h
 

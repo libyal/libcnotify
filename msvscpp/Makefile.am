@@ -1,4 +1,5 @@
 MSVSCPP_FILES = \
+	cnotify_test_stream_set/cnotify_test_stream_set.vcproj \
 	libcerror/libcerror.vcproj \
 	libcnotify/libcnotify.vcproj \
 	libcstring/libcstring.vcproj \

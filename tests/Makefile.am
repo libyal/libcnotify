@@ -5,14 +5,29 @@ AM_CPPFLAGS = \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBCNOTIFY_DLL_IMPORT@
 
-TESTS =
+TESTS = \
+	test_stream_set.sh
 
-check_SCRIPTS =
+check_SCRIPTS = \
+	test_stream_set.sh \
+	test_runner.sh
 
 EXTRA_DIST = \
 	$(check_SCRIPTS)
 
-check_PROGRAMS =
+check_PROGRAMS = \
+	cnotify_test_stream_set
+
+cnotify_test_stream_set_SOURCES = \
+	cnotify_test_libcerror.h \
+	cnotify_test_libcnotify.h \
+	cnotify_test_libcstring.h \
+	cnotify_test_stream_set.c
+
+cnotify_test_stream_set_LDADD = \
+	../libcnotify/libcnotify.la \
+	@LIBCERROR_LIBADD@ \
+	@LIBCSTRING_LIBADD@
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

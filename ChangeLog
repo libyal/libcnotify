@@ -1,5 +1,11 @@
-TODO
-* remove libcnotify_types.h
+Tests:
+* add test for stream open close
+* add test for libcnotify_printf
+* add test for libcnotify_print_data
+* add test for libcnotify_print_error_backtrace
+
+20160327
+* worked on tests
 
 20160105
 * 2016 update

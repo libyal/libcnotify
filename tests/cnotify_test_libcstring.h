@@ -1,5 +1,5 @@
 /*
- * The internal type definitions
+ * The internal libcstring header
  *
  * Copyright (C) 2008-2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -19,32 +19,33 @@
  * along with this software.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if !defined( _LIBCNOTIFY_INTERNAL_TYPES_H )
-#define _LIBCNOTIFY_INTERNAL_TYPES_H
+#if !defined( _CNOTIFY_TEST_LIBCSTRING_H )
+#define _CNOTIFY_TEST_LIBCSTRING_H
 
 #include <common.h>
-#include <types.h>
 
-/* Define HAVE_LOCAL_LIBCNOTIFY for local use of libcnotify
- * The definitions in <libcnotify/types.h> are copied here
- * for local use of libcnotify
+/* Define HAVE_LOCAL_LIBCSTRING for local use of libcstring
  */
-#if defined( HAVE_LOCAL_LIBCNOTIFY )
+#if defined( HAVE_LOCAL_LIBCSTRING )
 
-/* The following type definitions hide internal data structures
- */
-
-/* No types
-#if defined( HAVE_DEBUG_OUTPUT ) && !defined( WINAPI )
-typedef struct libcnotify_dummy {}	libcnotify_dummy_t;
+#include <libcstring_definitions.h>
+#include <libcstring_narrow_string.h>
+#include <libcstring_system_string.h>
+#include <libcstring_types.h>
+#include <libcstring_wide_string.h>
 
 #else
-typedef intptr_t libcnotify_dummy_t;
+
+/* If libtool DLL support is enabled set LIBCSTRING_DLL_IMPORT
+ * before including libcstring.h
+ */
+#if defined( _WIN32 ) && defined( DLL_IMPORT )
+#define LIBCSTRING_DLL_IMPORT
+#endif
+
+#include <libcstring.h>
 
 #endif
-*/
 
-#endif /* defined( HAVE_LOCAL_LIBCNOTIFY ) */
-
-#endif /* !defined( _LIBCNOTIFY_INTERNAL_TYPES_H ) */
+#endif
 

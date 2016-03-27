@@ -2,9 +2,10 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="libcnotify"
-	ProjectGUID="{E2E04A94-4821-4FA3-A39D-967E6465F01D}"
-	RootNamespace="libcnotify"
+	Name="cnotify_test_stream_set"
+	ProjectGUID="{830E21F8-0CD3-48B8-BA9C-C2841AC31A75}"
+	RootNamespace="cnotify_test_stream_set"
+	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
@@ -19,8 +20,9 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -40,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\include;..\..\common;..\..\libcstring;..\..\libcerror"
-				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;HAVE_LOCAL_LIBCSTRING;HAVE_LOCAL_LIBCERROR;LIBCNOTIFY_DLL_EXPORT"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;HAVE_LOCAL_LIBCSTRING;HAVE_LOCAL_LIBCERROR;LIBCNOTIFY_DLL_IMPORT"
 				RuntimeLibrary="2"
 				WarningLevel="4"
 				CompileAs="1"
@@ -56,12 +58,14 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\$(ProjectName).dll"
+				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="2"
 				DataExecutionPrevention="2"
 				TargetMachine="1"
-				ImportLibrary="$(OutDir)\$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -89,7 +93,7 @@
 			Name="VSDebug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="2"
+			ConfigurationType="1"
 			CharacterSet="1"
 			>
 			<Tool
@@ -111,7 +115,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include;..\..\common;..\..\libcstring;..\..\libcerror"
-				PreprocessorDefinitions="_CRT_SECURE_NO_DEPRECATE;HAVE_LOCAL_LIBCSTRING;HAVE_LOCAL_LIBCERROR;LIBCNOTIFY_DLL_EXPORT"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_DEPRECATE;HAVE_LOCAL_LIBCSTRING;HAVE_LOCAL_LIBCERROR;LIBCNOTIFY_DLL_IMPORT"
 				BasicRuntimeChecks="3"
 				SmallerTypeCheck="true"
 				RuntimeLibrary="3"
@@ -130,13 +134,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\$(ProjectName).dll"
+				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(OutDir)&quot;"
 				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="1"
 				TargetMachine="1"
-				ImportLibrary="$(OutDir)\$(ProjectName).lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -170,23 +176,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\libcnotify\libcnotify.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_print.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_stream.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_support.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_verbose.c"
+				RelativePath="..\..\tests\cnotify_test_stream_set.c"
 				>
 			</File>
 		</Filter>
@@ -196,39 +186,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\libcnotify\libcnotify_definitions.h"
+				RelativePath="..\..\tests\cnotify_test_libcerror.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libcnotify\libcnotify_extern.h"
+				RelativePath="..\..\tests\cnotify_test_libcnotify.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\libcnotify\libcnotify_libcerror.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_libcstring.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_print.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_stream.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_support.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_unused.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify_verbose.h"
+				RelativePath="..\..\tests\cnotify_test_libcstring.h"
 				>
 			</File>
 		</Filter>
@@ -237,10 +203,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath="..\..\libcnotify\libcnotify.rc"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
