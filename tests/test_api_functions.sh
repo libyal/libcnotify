@@ -33,7 +33,7 @@ test_api_function()
 
 		return ${EXIT_FAILURE};
 	fi
-	echo -n -e "Testing API function: ${TEST_FUNCTION}\t"
+	echo -n -e "Testing API function: lib${TEST_PREFIX}_${TEST_FUNCTION}\t";
 
 	run_test_with_arguments ${TEST_EXECUTABLE};
 	local RESULT=$?;
