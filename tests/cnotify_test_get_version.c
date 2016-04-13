@@ -28,16 +28,19 @@
 
 #include "cnotify_test_libcnotify.h"
 #include "cnotify_test_libcstring.h"
+#include "cnotify_test_unused.h"
 
 /* The main program
  */
 #if defined( LIBCSTRING_HAVE_WIDE_SYSTEM_CHARACTER )
-int wmain( int argc, wchar_t * const argv[] )
+int wmain( int argc, wchar_t * const argv[] CNOTIFY_TEST_ATTRIBUTE_UNUSED )
 #else
-int main( int argc, char * const argv[] )
+int main( int argc, char * const argv[] CNOTIFY_TEST_ATTRIBUTE_UNUSED )
 #endif
 {
 	const char *version_string = NULL;
+
+	CNOTIFY_TEST_UNREFERENCED_PARAMETER( argv )
 
 	if( argc != 1 )
 	{

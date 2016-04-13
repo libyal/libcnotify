@@ -20,10 +20,11 @@ check_PROGRAMS = \
 	cnotify_test_stream_set
 
 cnotify_test_get_version_SOURCES = \
+	cnotify_test_get_version.c
 	cnotify_test_libcerror.h \
 	cnotify_test_libcnotify.h \
 	cnotify_test_libcstring.h \
-	cnotify_test_get_version.c
+	cnotify_test_unused.h
 
 cnotify_test_get_version_LDADD = \
 	../libcnotify/libcnotify.la \

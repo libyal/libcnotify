@@ -197,6 +197,10 @@
 				RelativePath="..\..\tests\cnotify_test_libcstring.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\tests\cnotify_test_unused.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
