@@ -20,7 +20,6 @@
  */
 
 #include <common.h>
-#include <file_stream.h>
 
 #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
 #include <stdlib.h>
@@ -28,6 +27,7 @@
 
 #include "cnotify_test_libcnotify.h"
 #include "cnotify_test_libcstring.h"
+#include "cnotify_test_macros.h"
 #include "cnotify_test_unused.h"
 
 /* Tests retrieving the library version
@@ -46,11 +46,15 @@ int cnotify_test_get_version(
 	          LIBCNOTIFY_VERSION_STRING,
 	          9 );
 
-	if( result != 0 )
-	{
-		return( 0 );
-	}
+	CNOTIFY_TEST_ASSERT_EQUAL(
+	 "result",
+	 result,
+	 0 );
+
 	return( 1 );
+
+on_error:
+	return( 0 );
 }
 
 /* The main program
@@ -68,10 +72,13 @@ int main(
 	CNOTIFY_TEST_UNREFERENCED_PARAMETER( argc )
 	CNOTIFY_TEST_UNREFERENCED_PARAMETER( argv )
 
-	if( cnotify_test_get_version() != 1 )
-	{
-		return( EXIT_FAILURE );
-	}
+	CNOTIFY_TEST_RUN(
+	 "libcnotify_get_version",
+	 cnotify_test_get_version() )
+
 	return( EXIT_SUCCESS );
+
+on_error:
+	return( EXIT_FAILURE );
 }
 

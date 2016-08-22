@@ -4,6 +4,9 @@ Tests:
 * add test for libcnotify_print_data
 * add test for libcnotify_print_error_backtrace
 
+20160822
+* worked on tests
+
 20160327
 * worked on tests
 
