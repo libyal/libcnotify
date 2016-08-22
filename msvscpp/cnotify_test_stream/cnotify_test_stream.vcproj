@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="cnotify_test_get_version"
-	ProjectGUID="{96B650C4-9DC5-45F3-BEAE-E3CC3F866B68}"
-	RootNamespace="cnotify_test_get_version"
+	Name="cnotify_test_stream"
+	ProjectGUID="{BF70EB03-C640-4CFD-AAA3-F203F219DBFC}"
+	RootNamespace="cnotify_test_stream"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -176,7 +176,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\tests\cnotify_test_get_version.c"
+				RelativePath="..\..\tests\cnotify_test_stream.c"
 				>
 			</File>
 		</Filter>

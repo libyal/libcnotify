@@ -17,7 +17,8 @@ EXTRA_DIST = \
 
 check_PROGRAMS = \
 	cnotify_test_get_version \
-	cnotify_test_stream_set
+	cnotify_test_print \
+	cnotify_test_stream
 
 cnotify_test_get_version_SOURCES = \
 	cnotify_test_get_version.c
@@ -32,13 +33,28 @@ cnotify_test_get_version_LDADD = \
 	@LIBCERROR_LIBADD@ \
 	@LIBCSTRING_LIBADD@
 
-cnotify_test_stream_set_SOURCES = \
+cnotify_test_print_SOURCES = \
 	cnotify_test_libcerror.h \
 	cnotify_test_libcnotify.h \
 	cnotify_test_libcstring.h \
-	cnotify_test_stream_set.c
+	cnotify_test_macros.h \
+	cnotify_test_print.c \
+	cnotify_test_unused.h
 
-cnotify_test_stream_set_LDADD = \
+cnotify_test_print_LDADD = \
+	../libcnotify/libcnotify.la \
+	@LIBCERROR_LIBADD@ \
+	@LIBCSTRING_LIBADD@
+
+cnotify_test_stream_SOURCES = \
+	cnotify_test_libcerror.h \
+	cnotify_test_libcnotify.h \
+	cnotify_test_libcstring.h \
+	cnotify_test_macros.h \
+	cnotify_test_stream.c \
+	cnotify_test_unused.h
+
+cnotify_test_stream_LDADD = \
 	../libcnotify/libcnotify.la \
 	@LIBCERROR_LIBADD@ \
 	@LIBCSTRING_LIBADD@

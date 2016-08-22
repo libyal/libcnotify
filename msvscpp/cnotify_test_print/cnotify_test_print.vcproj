@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="cnotify_test_stream_set"
-	ProjectGUID="{830E21F8-0CD3-48B8-BA9C-C2841AC31A75}"
-	RootNamespace="cnotify_test_stream_set"
+	Name="cnotify_test_print"
+	ProjectGUID="{48AE3BCE-E3A9-4A7E-9556-9C95021D7FD8}"
+	RootNamespace="cnotify_test_print"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -176,7 +176,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\tests\cnotify_test_stream_set.c"
+				RelativePath="..\..\tests\cnotify_test_print.c"
 				>
 			</File>
 		</Filter>
@@ -195,6 +195,14 @@
 			</File>
 			<File
 				RelativePath="..\..\tests\cnotify_test_libcstring.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\tests\cnotify_test_macros.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\tests\cnotify_test_unused.h"
 				>
 			</File>
 		</Filter>

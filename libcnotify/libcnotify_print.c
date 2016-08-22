@@ -125,7 +125,7 @@ int libcnotify_print_data(
 
 	if( libcnotify_stream == NULL )
 	{
-		return( -1 );
+		return( 0 );
 	}
 	if( data == NULL )
 	{
@@ -311,16 +311,16 @@ int libcnotify_print_data(
 int libcnotify_print_error_backtrace(
      libcerror_error_t *error )
 {
+	int print_count = 0;
+
 	if( libcnotify_stream == NULL )
 	{
-		return( -1 );
+		return( 0 );
 	}
-	if( libcerror_error_backtrace_fprint(
-	     error,
-	     libcnotify_stream ) != 1 )
-	{
-		return( -1 );
-	}
-	return( 1 );
+	print_count = libcerror_error_backtrace_fprint(
+	               error,
+	               libcnotify_stream );
+
+	return( print_count );
 }
 
