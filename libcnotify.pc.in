@@ -3,7 +3,7 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: libuna
+Name: libcnotify
 Description: Library to support cross-platform C notification functions
 Version: @VERSION@
 Libs: -L${libdir} -lcnotify

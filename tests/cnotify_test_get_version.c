@@ -46,7 +46,7 @@ int cnotify_test_get_version(
 	          LIBCNOTIFY_VERSION_STRING,
 	          9 );
 
-	CNOTIFY_TEST_ASSERT_EQUAL(
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
 	 0 );
