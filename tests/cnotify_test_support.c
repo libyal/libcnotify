@@ -1,5 +1,5 @@
 /*
- * Library get version test program
+ * Library support functions test program
  *
  * Copyright (C) 2008-2016, Joachim Metz <joachim.metz@gmail.com>
  *
@@ -30,7 +30,7 @@
 #include "cnotify_test_macros.h"
 #include "cnotify_test_unused.h"
 
-/* Tests retrieving the library version
+/* Tests the libcnotify_get_version function
  * Returns 1 if successful or 0 if not
  */
 int cnotify_test_get_version(
@@ -74,7 +74,7 @@ int main(
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_get_version",
-	 cnotify_test_get_version() )
+	 cnotify_test_get_version );
 
 	return( EXIT_SUCCESS );
 

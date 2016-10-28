@@ -44,7 +44,7 @@ int cnotify_test_printf(
 	print_count = libcnotify_printf(
 	               "Test" );
 
-	CNOTIFY_TEST_ASSERT_EQUAL(
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "print_count",
 	 print_count,
 	 0 );
@@ -72,7 +72,7 @@ int cnotify_test_print_data(
 	               8,
 	               0 );
 
-	CNOTIFY_TEST_ASSERT_EQUAL(
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "print_count",
 	 print_count,
 	 0 );
@@ -97,7 +97,7 @@ int cnotify_test_print_error_backtrace(
 	print_count = libcnotify_print_error_backtrace(
 	               error );
 
-	CNOTIFY_TEST_ASSERT_EQUAL(
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "print_count",
 	 print_count,
 	 0 );
@@ -111,9 +111,13 @@ on_error:
 /* The main program
  */
 #if defined( LIBCSTRING_HAVE_WIDE_SYSTEM_CHARACTER )
-int wmain( int argc, wchar_t * const argv[] )
+int wmain(
+     int argc CNOTIFY_TEST_ATTRIBUTE_UNUSED,
+     wchar_t * const argv[] CNOTIFY_TEST_ATTRIBUTE_UNUSED )
 #else
-int main( int argc, char * const argv[] )
+int main(
+     int argc CNOTIFY_TEST_ATTRIBUTE_UNUSED,
+     char * const argv[] CNOTIFY_TEST_ATTRIBUTE_UNUSED )
 #endif
 {
 	CNOTIFY_TEST_UNREFERENCED_PARAMETER( argc )
@@ -121,15 +125,15 @@ int main( int argc, char * const argv[] )
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_printf",
-	 cnotify_test_printf() )
+	 cnotify_test_printf );
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_print_data",
-	 cnotify_test_print_data() )
+	 cnotify_test_print_data );
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_print_error_backtrace",
-	 cnotify_test_print_error_backtrace() )
+	 cnotify_test_print_error_backtrace );
 
 	return( EXIT_SUCCESS );
 

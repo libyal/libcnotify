@@ -44,7 +44,7 @@ int cnotify_test_stream_set(
 	          stderr,
 	          &error );
 
-	CNOTIFY_TEST_ASSERT_EQUAL(
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
 	 1 );
@@ -81,7 +81,7 @@ int cnotify_test_stream_open(
 	          NULL,
 	          &error );
 
-	CNOTIFY_TEST_ASSERT_EQUAL(
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
 	 -1 );
@@ -116,7 +116,7 @@ int cnotify_test_stream_close(
 	result = libcnotify_stream_close(
 	          &error );
 
-	CNOTIFY_TEST_ASSERT_EQUAL(
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
 	 0 );
@@ -139,9 +139,13 @@ on_error:
 /* The main program
  */
 #if defined( LIBCSTRING_HAVE_WIDE_SYSTEM_CHARACTER )
-int wmain( int argc, wchar_t * const argv[] )
+int wmain(
+     int argc CNOTIFY_TEST_ATTRIBUTE_UNUSED,
+     wchar_t * const argv[] CNOTIFY_TEST_ATTRIBUTE_UNUSED )
 #else
-int main( int argc, char * const argv[] )
+int main(
+     int argc CNOTIFY_TEST_ATTRIBUTE_UNUSED,
+     char * const argv[] CNOTIFY_TEST_ATTRIBUTE_UNUSED )
 #endif
 {
 	CNOTIFY_TEST_UNREFERENCED_PARAMETER( argc )
@@ -149,15 +153,15 @@ int main( int argc, char * const argv[] )
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_stream_set",
-	 cnotify_test_stream_set() )
+	 cnotify_test_stream_set );
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_stream_open",
-	 cnotify_test_stream_open() )
+	 cnotify_test_stream_open );
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_stream_close",
-	 cnotify_test_stream_close() )
+	 cnotify_test_stream_close );
 
 	return( EXIT_SUCCESS );
 
