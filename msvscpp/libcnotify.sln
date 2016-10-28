@@ -1,13 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cnotify_test_get_version", "cnotify_test_get_version\cnotify_test_get_version.vcproj", "{96B650C4-9DC5-45F3-BEAE-E3CC3F866B68}"
-	ProjectSection(ProjectDependencies) = postProject
-		{E2E04A94-4821-4FA3-A39D-967E6465F01D} = {E2E04A94-4821-4FA3-A39D-967E6465F01D}
-		{BD3A95FA-A3DE-4B79-A889-A7E5ECA4B69C} = {BD3A95FA-A3DE-4B79-A889-A7E5ECA4B69C}
-		{20FFC4C9-F44C-45F6-A827-4819B4DF3C9F} = {20FFC4C9-F44C-45F6-A827-4819B4DF3C9F}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cnotify_test_print", "cnotify_test_print\cnotify_test_print.vcproj", "{48AE3BCE-E3A9-4A7E-9556-9C95021D7FD8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E2E04A94-4821-4FA3-A39D-967E6465F01D} = {E2E04A94-4821-4FA3-A39D-967E6465F01D}
@@ -16,6 +9,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cnotify_test_print", "cnoti
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cnotify_test_stream", "cnotify_test_stream\cnotify_test_stream.vcproj", "{BF70EB03-C640-4CFD-AAA3-F203F219DBFC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E2E04A94-4821-4FA3-A39D-967E6465F01D} = {E2E04A94-4821-4FA3-A39D-967E6465F01D}
+		{BD3A95FA-A3DE-4B79-A889-A7E5ECA4B69C} = {BD3A95FA-A3DE-4B79-A889-A7E5ECA4B69C}
+		{20FFC4C9-F44C-45F6-A827-4819B4DF3C9F} = {20FFC4C9-F44C-45F6-A827-4819B4DF3C9F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cnotify_test_support", "cnotify_test_support\cnotify_test_support.vcproj", "{8F86AC5A-E019-4F05-9B0C-947E6A01D00A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E2E04A94-4821-4FA3-A39D-967E6465F01D} = {E2E04A94-4821-4FA3-A39D-967E6465F01D}
 		{BD3A95FA-A3DE-4B79-A889-A7E5ECA4B69C} = {BD3A95FA-A3DE-4B79-A889-A7E5ECA4B69C}
@@ -41,10 +41,6 @@ Global
 		VSDebug|Win32 = VSDebug|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{96B650C4-9DC5-45F3-BEAE-E3CC3F866B68}.Release|Win32.ActiveCfg = Release|Win32
-		{96B650C4-9DC5-45F3-BEAE-E3CC3F866B68}.Release|Win32.Build.0 = Release|Win32
-		{96B650C4-9DC5-45F3-BEAE-E3CC3F866B68}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
-		{96B650C4-9DC5-45F3-BEAE-E3CC3F866B68}.VSDebug|Win32.Build.0 = VSDebug|Win32
 		{48AE3BCE-E3A9-4A7E-9556-9C95021D7FD8}.Release|Win32.ActiveCfg = Release|Win32
 		{48AE3BCE-E3A9-4A7E-9556-9C95021D7FD8}.Release|Win32.Build.0 = Release|Win32
 		{48AE3BCE-E3A9-4A7E-9556-9C95021D7FD8}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
@@ -53,6 +49,10 @@ Global
 		{BF70EB03-C640-4CFD-AAA3-F203F219DBFC}.Release|Win32.Build.0 = Release|Win32
 		{BF70EB03-C640-4CFD-AAA3-F203F219DBFC}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
 		{BF70EB03-C640-4CFD-AAA3-F203F219DBFC}.VSDebug|Win32.Build.0 = VSDebug|Win32
+		{8F86AC5A-E019-4F05-9B0C-947E6A01D00A}.Release|Win32.ActiveCfg = Release|Win32
+		{8F86AC5A-E019-4F05-9B0C-947E6A01D00A}.Release|Win32.Build.0 = Release|Win32
+		{8F86AC5A-E019-4F05-9B0C-947E6A01D00A}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
+		{8F86AC5A-E019-4F05-9B0C-947E6A01D00A}.VSDebug|Win32.Build.0 = VSDebug|Win32
 		{20FFC4C9-F44C-45F6-A827-4819B4DF3C9F}.Release|Win32.ActiveCfg = Release|Win32
 		{20FFC4C9-F44C-45F6-A827-4819B4DF3C9F}.Release|Win32.Build.0 = Release|Win32
 		{20FFC4C9-F44C-45F6-A827-4819B4DF3C9F}.VSDebug|Win32.ActiveCfg = VSDebug|Win32
