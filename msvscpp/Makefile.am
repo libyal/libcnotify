@@ -4,7 +4,6 @@ MSVSCPP_FILES = \
 	cnotify_test_support/cnotify_test_support.vcproj \
 	libcerror/libcerror.vcproj \
 	libcnotify/libcnotify.vcproj \
-	libcstring/libcstring.vcproj \
 	libcnotify.sln
 
 EXTRA_DIST = \

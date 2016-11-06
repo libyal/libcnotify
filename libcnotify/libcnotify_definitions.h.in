@@ -37,7 +37,7 @@
 
 #define LIBCNOTIFY_VERSION				@VERSION@
 
-/* The libcstring version string
+/* The libcnotify version string
  */
 #define LIBCNOTIFY_VERSION_STRING			"@VERSION@"
 

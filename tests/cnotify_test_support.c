@@ -20,13 +20,14 @@
  */
 
 #include <common.h>
+#include <narrow_string.h>
+#include <types.h>
 
 #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
 #include <stdlib.h>
 #endif
 
 #include "cnotify_test_libcnotify.h"
-#include "cnotify_test_libcstring.h"
 #include "cnotify_test_macros.h"
 #include "cnotify_test_unused.h"
 
@@ -41,7 +42,7 @@ int cnotify_test_get_version(
 
 	version_string = libcnotify_get_version();
 
-	result = libcstring_narrow_string_compare(
+	result = narrow_string_compare(
 	          version_string,
 	          LIBCNOTIFY_VERSION_STRING,
 	          9 );
@@ -59,7 +60,7 @@ on_error:
 
 /* The main program
  */
-#if defined( LIBCSTRING_HAVE_WIDE_SYSTEM_CHARACTER )
+#if defined( HAVE_WIDE_SYSTEM_CHARACTER )
 int wmain(
      int argc CNOTIFY_TEST_ATTRIBUTE_UNUSED,
      wchar_t * const argv[] CNOTIFY_TEST_ATTRIBUTE_UNUSED )

@@ -1,7 +1,6 @@
 AM_CPPFLAGS = \
 	-I$(top_srcdir)/include \
 	-I$(top_srcdir)/common \
-	@LIBCSTRING_CPPFLAGS@ \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBCNOTIFY_DLL_IMPORT@
 
@@ -23,41 +22,35 @@ check_PROGRAMS = \
 cnotify_test_print_SOURCES = \
 	cnotify_test_libcerror.h \
 	cnotify_test_libcnotify.h \
-	cnotify_test_libcstring.h \
 	cnotify_test_macros.h \
 	cnotify_test_print.c \
 	cnotify_test_unused.h
 
 cnotify_test_print_LDADD = \
 	../libcnotify/libcnotify.la \
-	@LIBCERROR_LIBADD@ \
-	@LIBCSTRING_LIBADD@
+	@LIBCERROR_LIBADD@
 
 cnotify_test_stream_SOURCES = \
 	cnotify_test_libcerror.h \
 	cnotify_test_libcnotify.h \
-	cnotify_test_libcstring.h \
 	cnotify_test_macros.h \
 	cnotify_test_stream.c \
 	cnotify_test_unused.h
 
 cnotify_test_stream_LDADD = \
 	../libcnotify/libcnotify.la \
-	@LIBCERROR_LIBADD@ \
-	@LIBCSTRING_LIBADD@
+	@LIBCERROR_LIBADD@
 
 cnotify_test_support_SOURCES = \
 	cnotify_test_libcerror.h \
 	cnotify_test_libcnotify.h \
-	cnotify_test_libcstring.h \
 	cnotify_test_macros.h \
-	cnotify_test_support.c
+	cnotify_test_support.c \
 	cnotify_test_unused.h
 
 cnotify_test_support_LDADD = \
 	../libcnotify/libcnotify.la \
-	@LIBCERROR_LIBADD@ \
-	@LIBCSTRING_LIBADD@
+	@LIBCERROR_LIBADD@
 
 MAINTAINERCLEANFILES = \
 	Makefile.in
