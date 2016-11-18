@@ -51,5 +51,5 @@ int libcnotify_print_error_backtrace(
 }
 #endif
 
-#endif
+#endif /* !defined( _LIBCNOTIFY_PRINT_H ) */
 

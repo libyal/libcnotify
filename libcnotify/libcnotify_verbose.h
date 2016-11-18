@@ -42,5 +42,5 @@ void libcnotify_verbose_set(
 }
 #endif
 
-#endif
+#endif /* !defined( _LIBCNOTIFY_VERBOSE_H ) */
 

@@ -52,5 +52,5 @@ int libcnotify_stream_close(
 }
 #endif
 
-#endif
+#endif /* !defined( _LIBCNOTIFY_STREAM_H ) */
 

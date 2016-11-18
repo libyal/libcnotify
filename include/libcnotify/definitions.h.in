@@ -24,17 +24,17 @@
 
 #include <libcnotify/types.h>
 
-#define LIBCNOTIFY_VERSION				@VERSION@
+#define LIBCNOTIFY_VERSION			@VERSION@
 
 /* The libcnotify version string
  */
-#define LIBCNOTIFY_VERSION_STRING			"@VERSION@"
+#define LIBCNOTIFY_VERSION_STRING		"@VERSION@"
 
 /* The print data flags
  */
 enum LIBCNOTIFY_NOTIFY_PRINT_DATA_FLAGS
 {
-	LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA		= 0x01,
+	LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA	= 0x01,
 };
 
 #endif /* !defined( _LIBCNOTIFY_DEFINITIONS_H ) */

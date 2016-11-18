@@ -45,5 +45,5 @@ const char *libcnotify_get_version(
 }
 #endif
 
-#endif
+#endif /* !defined( _LIBCNOTIFY_SUPPORT_H ) */
 
