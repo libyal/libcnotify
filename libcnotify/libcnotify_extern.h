@@ -38,9 +38,9 @@
 #include <libcnotify/extern.h>
 
 #else
-#define LIBCNOTIFY_EXTERN	extern
+#define LIBCNOTIFY_EXTERN	/* extern */
 
-#endif
+#endif /* !defined( HAVE_LOCAL_LIBCNOTIFY ) */
 
 #endif /* !defined( _LIBCNOTIFY_INTERNAL_EXTERN_H ) */
 

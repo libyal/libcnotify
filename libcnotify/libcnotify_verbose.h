@@ -31,8 +31,9 @@
 extern "C" {
 #endif
 
-LIBCNOTIFY_EXTERN \
-int libcnotify_verbose;
+/* Using extern here to make the value is exported when used as a local library
+ */
+extern int libcnotify_verbose;
 
 LIBCNOTIFY_EXTERN \
 void libcnotify_verbose_set(
