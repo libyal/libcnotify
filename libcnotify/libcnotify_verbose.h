@@ -31,9 +31,11 @@
 extern "C" {
 #endif
 
-/* Using extern here to make the value is exported when used as a local library
- */
+#if !defined( __CYGWIN__ )
 extern int libcnotify_verbose;
+#else
+int libcnotify_verbose;
+#endif
 
 LIBCNOTIFY_EXTERN \
 void libcnotify_verbose_set(
