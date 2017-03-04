@@ -21,6 +21,7 @@
 
 #include <common.h>
 #include <file_stream.h>
+#include <memory.h>
 #include <types.h>
 
 #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
@@ -38,10 +39,48 @@
 int cnotify_test_printf(
      void )
 {
-	int print_count = 0;
+	libcerror_error_t *error = NULL;
+	int print_count          = 0;
+	int result               = 0;
 
-	/* Test print without libcnotify_stream set
+	/* Test print with stream
 	 */
+	result = libcnotify_stream_set(
+	          stderr,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	print_count = libcnotify_printf(
+	               "Test" );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "print_count",
+	 print_count,
+	 4 );
+
+	/* Test print without stream
+	 */
+	result = libcnotify_stream_set(
+	          NULL,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	print_count = libcnotify_printf(
 	               "Test" );
 
@@ -62,15 +101,93 @@ on_error:
 int cnotify_test_print_data(
      void )
 {
-	uint8_t data[ 8 ];
+	uint8_t data[ 60 ];
 
-	int print_count = 0;
+	libcerror_error_t *error = NULL;
+	int index                = 0;
+	int print_count          = 0;
+	int result               = 0;
 
-	/* Test print without libcnotify_stream set
+	/* Test print with stream
+	 */
+	result = libcnotify_stream_set(
+	          stderr,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test regular cases
+	 */
+	for( index = 0;
+	     index < 60;
+	     index++ )
+	{
+		data[ index ] = index + index;
+	}
+	print_count = libcnotify_print_data(
+	               data,
+	               60,
+	               0 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "print_count",
+	 print_count,
+	 313 );
+
+	memory_set(
+	 data,
+	 'X',
+	 60 );
+
+	print_count = libcnotify_print_data(
+	               data,
+	               60,
+	               LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "print_count",
+	 print_count,
+	 238 );
+
+	/* Test error cases
+	 */
+	print_count = libcnotify_print_data(
+	               NULL,
+	               60,
+	               0 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "print_count",
+	 print_count,
+	 -1 );
+
+	/* Test print without stream
+	 */
+	result = libcnotify_stream_set(
+	          NULL,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test regular cases
 	 */
 	print_count = libcnotify_print_data(
 	               data,
-	               8,
+	               60,
 	               0 );
 
 	CNOTIFY_TEST_ASSERT_EQUAL_INT(
@@ -92,9 +209,46 @@ int cnotify_test_print_error_backtrace(
 {
 	libcerror_error_t *error = NULL;
 	int print_count          = 0;
+	int result               = 0;
 
-	/* Test print without libcnotify_stream set
+	/* Test print with stream
 	 */
+	result = libcnotify_stream_set(
+	          stderr,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	print_count = libcnotify_print_error_backtrace(
+	               error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "print_count",
+	 print_count,
+	 -1 );
+
+	/* Test print without stream
+	 */
+	result = libcnotify_stream_set(
+	          NULL,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	print_count = libcnotify_print_error_backtrace(
 	               error );
 
