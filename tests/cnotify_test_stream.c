@@ -72,9 +72,50 @@ int cnotify_test_stream_open(
      void )
 {
 	libcerror_error_t *error = NULL;
+	char *filename           = NULL;
 	int result               = 0;
 
-/* TODO: create temporary file */
+	/* Test regular cases
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	filename = _tempnam(
+	            "C:\\Windows\\Temp",
+	            "cnotify" );
+#else
+	filename = tempnam(
+	            "/tmp",
+	            "cnotify" );
+#endif
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "filename",
+	 filename );
+
+	result = libcnotify_stream_open(
+	          filename,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Clean up
+	 */
+	result = libcnotify_stream_close(
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	/* Test error cases
 	 */
