@@ -37,6 +37,19 @@ int libcnotify_printf(
      const char *format,
      ... );
 
+int libcnotify_print_data_as_character(
+     uint8_t data );
+
+int libcnotify_print_data_as_characters(
+     const uint8_t *data,
+     size_t data_size,
+     size_t data_offset );
+
+int libcnotify_print_data_as_hexadecimal(
+     const uint8_t *data,
+     size_t data_size,
+     size_t data_offset );
+
 LIBCNOTIFY_EXTERN \
 int libcnotify_print_data(
      const uint8_t *data,
