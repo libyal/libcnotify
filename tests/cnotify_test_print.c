@@ -168,6 +168,8 @@ on_error:
 	return( 0 );
 }
 
+#if defined( __GNUC__ )
+
 /* Tests the libcnotify_print_data_as_character function
  * Returns 1 if successful or 0 if not
  */
@@ -248,10 +250,15 @@ int cnotify_test_print_data_as_characters(
 {
 	uint8_t data[ 60 ];
 
-	libcerror_error_t *error = NULL;
-	int index                = 0;
-	int print_count          = 0;
-	int result               = 0;
+	libcerror_error_t *error          = NULL;
+	int index                         = 0;
+	int print_count                   = 0;
+	int result                        = 0;
+
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+	int number_of_vfprintf_fail_tests = 2;
+	int test_number                   = 0;
+#endif
 
 	/* Test print with stream
 	 */
@@ -274,7 +281,7 @@ int cnotify_test_print_data_as_characters(
 	     index < 60;
 	     index++ )
 	{
-		data[ index ] = index + index;
+		data[ index ] = (uint8_t) ( index + index );
 	}
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -338,6 +345,34 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 -1 );
 
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+	for( test_number = 0;
+	     test_number < number_of_vfprintf_fail_tests;
+	     test_number++ )
+	{
+		/* Test libcnotify_printf with vfprintf failing
+		 */
+		cnotify_test_vfprintf_attempts_before_fail = test_number;
+
+		print_count = libcnotify_print_data_as_characters(
+		               data,
+		               16,
+		               0 );
+
+		if( cnotify_test_vfprintf_attempts_before_fail != -1 )
+		{
+			cnotify_test_vfprintf_attempts_before_fail = -1;
+		}
+		else
+		{
+			CNOTIFY_TEST_ASSERT_EQUAL_INT(
+			 "print_count",
+			 print_count,
+			 -1 );
+		}
+	}
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+
 	return( 1 );
 
 on_error:
@@ -352,10 +387,15 @@ int cnotify_test_print_data_as_hexadecimal(
 {
 	uint8_t data[ 60 ];
 
-	libcerror_error_t *error = NULL;
-	int index                = 0;
-	int print_count          = 0;
-	int result               = 0;
+	libcerror_error_t *error          = NULL;
+	int index                         = 0;
+	int print_count                   = 0;
+	int result                        = 0;
+
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+	int number_of_vfprintf_fail_tests = 4;
+	int test_number                   = 0;
+#endif
 
 	/* Test print with stream
 	 */
@@ -378,7 +418,7 @@ int cnotify_test_print_data_as_hexadecimal(
 	     index < 60;
 	     index++ )
 	{
-		data[ index ] = index + index;
+		data[ index ] = (uint8_t) ( index + index );
 	}
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -442,11 +482,41 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 -1 );
 
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+	for( test_number = 0;
+	     test_number < number_of_vfprintf_fail_tests;
+	     test_number++ )
+	{
+		/* Test libcnotify_printf with vfprintf failing
+		 */
+		cnotify_test_vfprintf_attempts_before_fail = test_number;
+
+		print_count = libcnotify_print_data_as_hexadecimal(
+		               data,
+		               16,
+		               0 );
+
+		if( cnotify_test_vfprintf_attempts_before_fail != -1 )
+		{
+			cnotify_test_vfprintf_attempts_before_fail = -1;
+		}
+		else
+		{
+			CNOTIFY_TEST_ASSERT_EQUAL_INT(
+			 "print_count",
+			 print_count,
+			 -1 );
+		}
+	}
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+
 	return( 1 );
 
 on_error:
 	return( 0 );
 }
+
+#endif /* defined( __GNUC__ ) */
 
 /* Tests the libcnotify_print_data function
  * Returns 1 if successful or 0 if not
@@ -454,7 +524,7 @@ on_error:
 int cnotify_test_print_data(
      void )
 {
-	uint8_t data[ 60 ];
+	uint8_t data[ 128 ];
 
 	libcerror_error_t *error          = NULL;
 	int index                         = 0;
@@ -462,7 +532,7 @@ int cnotify_test_print_data(
 	int result                        = 0;
 
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
-	int number_of_vfprintf_fail_tests = 1;
+	int number_of_vfprintf_fail_tests = 5;
 	int test_number                   = 0;
 #endif
 
@@ -487,7 +557,7 @@ int cnotify_test_print_data(
 	     index < 60;
 	     index++ )
 	{
-		data[ index ] = index + index;
+		data[ index ] = (uint8_t) ( index + index );
 	}
 	print_count = libcnotify_print_data(
 	               data,
@@ -522,7 +592,7 @@ int cnotify_test_print_data(
 	 -1 );
 
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
-	number_of_vfprintf_fail_tests = 1;
+	number_of_vfprintf_fail_tests = 5;
 
 	for( test_number = 0;
 	     test_number < number_of_vfprintf_fail_tests;
@@ -534,7 +604,7 @@ int cnotify_test_print_data(
 
 		print_count = libcnotify_print_data(
 		               data,
-		               60,
+		               16,
 		               0 );
 
 		if( cnotify_test_vfprintf_attempts_before_fail != -1 )
@@ -556,52 +626,45 @@ int cnotify_test_print_data(
 	memory_set(
 	 data,
 	 'X',
-	 48 );
+	 108 );
 
 	memory_set(
-	 &( data[ 48 ] ),
+	 &( data[ 108 ] ),
 	 'Y',
-	 60 - 48 );
+	 120 - 108 );
 
 	print_count = libcnotify_print_data(
 	               data,
-	               60,
+	               120,
 	               LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA );
 
 	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "print_count",
 	 print_count,
-	 238 );
+	 312 );
 
 	/* Test error cases
 	 */
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
-	number_of_vfprintf_fail_tests = 1;
+	/* Test libcnotify_printf with vfprintf failing
+	 */
+	cnotify_test_vfprintf_attempts_before_fail = 2;
 
-	for( test_number = 0;
-	     test_number < number_of_vfprintf_fail_tests;
-	     test_number++ )
+	print_count = libcnotify_print_data(
+	               data,
+	               120,
+	               LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA );
+
+	if( cnotify_test_vfprintf_attempts_before_fail != -1 )
 	{
-		/* Test libcnotify_printf with vfprintf failing
-		 */
-		cnotify_test_vfprintf_attempts_before_fail = test_number;
-
-		print_count = libcnotify_print_data(
-		               data,
-		               60,
-		               LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA );
-
-		if( cnotify_test_vfprintf_attempts_before_fail != -1 )
-		{
-			cnotify_test_vfprintf_attempts_before_fail = -1;
-		}
-		else
-		{
-			CNOTIFY_TEST_ASSERT_EQUAL_INT(
-			 "print_count",
-			 print_count,
-			 -1 );
-		}
+		cnotify_test_vfprintf_attempts_before_fail = -1;
+	}
+	else
+	{
+		CNOTIFY_TEST_ASSERT_EQUAL_INT(
+		 "print_count",
+		 print_count,
+		 -1 );
 	}
 #endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
 
@@ -719,6 +782,8 @@ int main(
 	 "libcnotify_printf",
 	 cnotify_test_printf );
 
+#if defined( __GNUC__ )
+
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_print_data_as_character",
 	 cnotify_test_print_data_as_character );
@@ -730,6 +795,8 @@ int main(
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_print_data_as_hexadecimal",
 	 cnotify_test_print_data_as_hexadecimal );
+
+#endif /* defined( __GNUC__ ) */
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_print_data",
