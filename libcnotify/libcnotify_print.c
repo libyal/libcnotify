@@ -205,11 +205,12 @@ int libcnotify_print_data_as_hexadecimal(
 		}
 		total_print_count += print_count;
 
-		if( data_offset % 16 == 0 )
+		if( ( data_offset % 16 == 0 )
+		 || ( data_offset == data_size ) )
 		{
 			break;
 		}
-		else if( data_offset % 8 == 0 )
+		if( data_offset % 8 == 0 )
 		{
 			print_count = libcnotify_printf(
 			               " " );

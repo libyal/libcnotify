@@ -27,10 +27,54 @@
 #include <stdlib.h>
 #endif
 
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+#define __USE_GNU
+#include <dlfcn.h>
+#undef __USE_GNU
+#endif
+
 #include "cnotify_test_libcerror.h"
 #include "cnotify_test_libcnotify.h"
 #include "cnotify_test_macros.h"
 #include "cnotify_test_unused.h"
+
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+
+static int (*cnotify_test_real_fclose)(FILE *) = NULL;
+
+int cnotify_test_fclose_attempts_before_fail   = -1;
+
+/* Custom fclose for testing memory error cases
+ * Returns a pointer to newly allocated data or NULL
+ */
+int fclose(
+     FILE *stream )
+{
+	int print_count = 0;
+
+	if( cnotify_test_real_fclose == NULL )
+	{
+		cnotify_test_real_fclose = dlsym(
+		                            RTLD_NEXT,
+		                            "fclose" );
+	}
+	if( cnotify_test_fclose_attempts_before_fail == 0 )
+	{
+		cnotify_test_fclose_attempts_before_fail = -1;
+
+		return( -1 );
+	}
+	else if( cnotify_test_fclose_attempts_before_fail > 0 )
+	{
+		cnotify_test_fclose_attempts_before_fail--;
+	}
+	print_count = cnotify_test_real_fclose(
+	               stream );
+
+	return( print_count );
+}
+
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
 
 /* Tests the libcnotify_stream_set function
  * Returns 1 if successful or 0 if not
@@ -39,8 +83,11 @@ int cnotify_test_stream_set(
      void )
 {
 	libcerror_error_t *error = NULL;
+	char *filename           = NULL;
 	int result               = 0;
 
+	/* Test set of stderr
+	 */
 	result = libcnotify_stream_set(
 	          stderr,
 	          &error );
@@ -54,28 +101,7 @@ int cnotify_test_stream_set(
 	 "error",
 	 error );
 
-	return( 1 );
-
-on_error:
-	if( error != NULL )
-	{
-		libcerror_error_free(
-		 &error );
-	}
-	return( 0 );
-}
-
-/* Tests the libcnotify_stream_open function
- * Returns 1 if successful or 0 if not
- */
-int cnotify_test_stream_open(
-     void )
-{
-	libcerror_error_t *error = NULL;
-	char *filename           = NULL;
-	int result               = 0;
-
-	/* Test regular cases
+	/* Test set stderr after open
 	 */
 #if defined( WINAPI ) && !defined( __CYGWIN__ )
 	filename = _tempnam(
@@ -103,6 +129,76 @@ int cnotify_test_stream_open(
 	 "error",
 	 error );
 
+	result = libcnotify_stream_set(
+	          stderr,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test error cases
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	filename = _tempnam(
+	            "C:\\Windows\\Temp",
+	            "cnotify" );
+#else
+	filename = tempnam(
+	            "/tmp",
+	            "cnotify" );
+#endif
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "filename",
+	 filename );
+
+	result = libcnotify_stream_open(
+	          filename,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+	/* Test libcnotify_stream_close with fclose failing
+	 */
+	cnotify_test_fclose_attempts_before_fail = 1;
+
+	result = libcnotify_stream_set(
+	          stderr,
+	          &error );
+
+	if( cnotify_test_fclose_attempts_before_fail != -1 )
+	{
+		cnotify_test_fclose_attempts_before_fail = -1;
+	}
+	else
+	{
+		CNOTIFY_TEST_ASSERT_EQUAL_INT(
+		 "result",
+		 result,
+		 -1 );
+
+		CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+		 "error",
+		 error );
+
+		libcerror_error_free(
+		 &error );
+	}
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+
 	/* Clean up
 	 */
 	result = libcnotify_stream_close(
@@ -112,6 +208,83 @@ int cnotify_test_stream_open(
 	 "result",
 	 result,
 	 0 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	return( 1 );
+
+on_error:
+	if( error != NULL )
+	{
+		libcerror_error_free(
+		 &error );
+	}
+	return( 0 );
+}
+
+/* Tests the libcnotify_stream_open function
+ * Returns 1 if successful or 0 if not
+ */
+int cnotify_test_stream_open(
+     void )
+{
+	libcerror_error_t *error = NULL;
+	char *filename           = NULL;
+	int result               = 0;
+
+	/* Test open
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	filename = _tempnam(
+	            "C:\\Windows\\Temp",
+	            "cnotify" );
+#else
+	filename = tempnam(
+	            "/tmp",
+	            "cnotify" );
+#endif
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "filename",
+	 filename );
+
+	result = libcnotify_stream_open(
+	          filename,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test open after open
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	filename = _tempnam(
+	            "C:\\Windows\\Temp",
+	            "cnotify" );
+#else
+	filename = tempnam(
+	            "/tmp",
+	            "cnotify" );
+#endif
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "filename",
+	 filename );
+
+	result = libcnotify_stream_open(
+	          filename,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
@@ -135,6 +308,64 @@ int cnotify_test_stream_open(
 	libcerror_error_free(
 	 &error );
 
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	filename = _tempnam(
+	            "C:\\Windows\\Temp",
+	            "cnotify" );
+#else
+	filename = tempnam(
+	            "/tmp",
+	            "cnotify" );
+#endif
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "filename",
+	 filename );
+
+	/* Test libcnotify_stream_open with fclose failing
+	 */
+	cnotify_test_fclose_attempts_before_fail = 1;
+
+	result = libcnotify_stream_open(
+	          filename,
+	          &error );
+
+	if( cnotify_test_fclose_attempts_before_fail != -1 )
+	{
+		cnotify_test_fclose_attempts_before_fail = -1;
+	}
+	else
+	{
+		CNOTIFY_TEST_ASSERT_EQUAL_INT(
+		 "result",
+		 result,
+		 -1 );
+
+		CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+		 "error",
+		 error );
+
+		libcerror_error_free(
+		 &error );
+	}
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+
+/* TODO: Test open after open with failing open */
+
+	/* Clean up
+	 */
+	result = libcnotify_stream_close(
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
 	return( 1 );
 
 on_error:
@@ -153,7 +384,50 @@ int cnotify_test_stream_close(
      void )
 {
 	libcerror_error_t *error = NULL;
+	char *filename           = NULL;
 	int result               = 0;
+
+	/* Test close after open
+	 */
+	result = libcnotify_stream_close(
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+	/* Test close after open
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	filename = _tempnam(
+	            "C:\\Windows\\Temp",
+	            "cnotify" );
+#else
+	filename = tempnam(
+	            "/tmp",
+	            "cnotify" );
+#endif
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "filename",
+	 filename );
+
+	result = libcnotify_stream_open(
+	          filename,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
 
 	result = libcnotify_stream_close(
 	          &error );
@@ -166,6 +440,62 @@ int cnotify_test_stream_close(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
+
+	/* Test error cases
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	filename = _tempnam(
+	            "C:\\Windows\\Temp",
+	            "cnotify" );
+#else
+	filename = tempnam(
+	            "/tmp",
+	            "cnotify" );
+#endif
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "filename",
+	 filename );
+
+	result = libcnotify_stream_open(
+	          filename,
+	          &error );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
+
+	CNOTIFY_TEST_ASSERT_IS_NULL(
+	 "error",
+	 error );
+
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+	/* Test libcnotify_stream_close with fclose failing
+	 */
+	cnotify_test_fclose_attempts_before_fail = 1;
+
+	result = libcnotify_stream_close(
+	          &error );
+
+	if( cnotify_test_fclose_attempts_before_fail != -1 )
+	{
+		cnotify_test_fclose_attempts_before_fail = -1;
+	}
+	else
+	{
+		CNOTIFY_TEST_ASSERT_EQUAL_INT(
+		 "result",
+		 result,
+		 -1 );
+
+		CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+		 "error",
+		 error );
+
+		libcerror_error_free(
+		 &error );
+	}
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
 
 	return( 1 );
 
