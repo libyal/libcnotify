@@ -451,7 +451,7 @@ int cnotify_test_print_data_as_hexadecimal(
 	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "print_count",
 	 print_count,
-	 48 );
+	 49 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -524,11 +524,11 @@ int cnotify_test_print_data_as_hexadecimal(
 		 print_count,
 		 -1 );
 	}
-	cnotify_test_vfprintf_attempts_before_fail = 8;
+	cnotify_test_vfprintf_attempts_before_fail = 7;
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
-	               8,
+	               7,
 	               0 );
 
 	if( cnotify_test_vfprintf_attempts_before_fail != -1 )
@@ -546,7 +546,7 @@ int cnotify_test_print_data_as_hexadecimal(
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
-	               8,
+	               7,
 	               0 );
 
 	if( cnotify_test_vfprintf_attempts_before_fail != -1 )
@@ -761,7 +761,7 @@ int cnotify_test_print_data(
 	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "print_count",
 	 print_count,
-	 311 );
+	 312 );
 
 	/* Test error cases
 	 */

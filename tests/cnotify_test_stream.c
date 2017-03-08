@@ -40,9 +40,43 @@
 
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
 
-static int (*cnotify_test_real_fclose)(FILE *) = NULL;
+static FILE *(*cnotify_test_real_fopen)(const char *, const char *) = NULL;
+static int (*cnotify_test_real_fclose)(FILE *)                      = NULL;
 
-int cnotify_test_fclose_attempts_before_fail   = -1;
+int cnotify_test_fopen_attempts_before_fail                         = -1;
+int cnotify_test_fclose_attempts_before_fail                        = -1;
+
+/* Custom fopen for testing memory error cases
+ * Returns a pointer to newly allocated data or NULL
+ */
+FILE *fopen(
+       const char *path,
+       const char *mode )
+{
+	FILE *stream = NULL;
+
+	if( cnotify_test_real_fopen == NULL )
+	{
+		cnotify_test_real_fopen = dlsym(
+		                           RTLD_NEXT,
+		                           "fopen" );
+	}
+	if( cnotify_test_fopen_attempts_before_fail == 0 )
+	{
+		cnotify_test_fopen_attempts_before_fail = -1;
+
+		return( NULL );
+	}
+	else if( cnotify_test_fopen_attempts_before_fail > 0 )
+	{
+		cnotify_test_fopen_attempts_before_fail--;
+	}
+	stream = cnotify_test_real_fopen(
+	          path,
+	          mode );
+
+	return( stream );
+}
 
 /* Custom fclose for testing memory error cases
  * Returns a pointer to newly allocated data or NULL
@@ -350,7 +384,34 @@ int cnotify_test_stream_open(
 	}
 #endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
 
-/* TODO: Test open after open with failing open */
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+	/* Test libcnotify_stream_open with fopen failing
+	 */
+	cnotify_test_fopen_attempts_before_fail = 0;
+
+	result = libcnotify_stream_open(
+	          filename,
+	          &error );
+
+	if( cnotify_test_fopen_attempts_before_fail != -1 )
+	{
+		cnotify_test_fopen_attempts_before_fail = -1;
+	}
+	else
+	{
+		CNOTIFY_TEST_ASSERT_EQUAL_INT(
+		 "result",
+		 result,
+		 -1 );
+
+		CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+		 "error",
+		 error );
+
+		libcerror_error_free(
+		 &error );
+	}
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
 
 	/* Clean up
 	 */
