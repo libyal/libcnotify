@@ -411,6 +411,8 @@ int cnotify_test_stream_open(
 		libcerror_error_free(
 		 &error );
 	}
+/* TODO test fail with different errno values */
+
 #endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
 
 	/* Clean up

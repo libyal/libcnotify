@@ -258,7 +258,7 @@ int libcnotify_print_data(
      size_t data_size,
      uint8_t print_data_flags )
 {
-	size_t data_iterator  = 0;
+	size_t data_offset    = 0;
 	int in_group          = 0;
 	int print_count       = 0;
 	int total_print_count = 0;
@@ -275,20 +275,20 @@ int libcnotify_print_data(
 	{
 		return( -1 );
 	}
-	while( data_iterator < data_size )
+	while( data_offset < data_size )
 	{
 		if( ( ( print_data_flags & LIBCNOTIFY_PRINT_DATA_FLAG_GROUP_DATA ) != 0 )
 		 && ( data_size >= 32 )
-		 && ( data_iterator >= 16 )
-		 && ( data_iterator <= ( data_size - 32 ) ) )
+		 && ( data_offset >= 16 )
+		 && ( data_offset <= ( data_size - 32 ) ) )
 		{
 			if( ( memory_compare(
-			       &( data[ data_iterator - 16 ] ),
-			       &( data[ data_iterator ] ),
+			       &( data[ data_offset - 16 ] ),
+			       &( data[ data_offset ] ),
 			       16 ) == 0 )
 			 && ( memory_compare(
-			       &( data[ data_iterator + 16 ] ),
-			       &( data[ data_iterator ] ),
+			       &( data[ data_offset + 16 ] ),
+			       &( data[ data_offset ] ),
 			       16 ) == 0 ) )
 			{
 				if( in_group == 0 )
@@ -304,17 +304,17 @@ int libcnotify_print_data(
 
 					in_group = 1;
 				}
-				data_iterator += 16;
+				data_offset += 16;
 
 				continue;
 			}
 			in_group = 0;
 		}
-		if( data_iterator % 16 == 0 )
+		if( data_offset % 16 == 0 )
 		{
 			print_count = libcnotify_printf(
 				       "%.8" PRIzx ": ",
-				       data_iterator );
+				       data_offset );
 
 			if( print_count <= -1 )
 			{
@@ -325,7 +325,7 @@ int libcnotify_print_data(
 		print_count = libcnotify_print_data_as_hexadecimal(
 		               data,
 		               data_size,
-		               data_iterator );
+		               data_offset );
 
 		if( print_count <= -1 )
 		{
@@ -345,7 +345,7 @@ int libcnotify_print_data(
 		print_count = libcnotify_print_data_as_characters(
 		               data,
 		               data_size,
-		               data_iterator );
+		               data_offset );
 
 		if( print_count <= -1 )
 		{
@@ -362,7 +362,7 @@ int libcnotify_print_data(
 		}
 		total_print_count += print_count;
 
-		data_iterator += 16;
+		data_offset += 16;
 	}
 	print_count = libcnotify_printf(
 		       "\n" );
