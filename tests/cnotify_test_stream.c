@@ -173,7 +173,7 @@ int cnotify_test_stream_set(
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
 	/* Test libcnotify_stream_close with fclose failing
 	 */
-	cnotify_test_fclose_attempts_before_fail = 1;
+	cnotify_test_fclose_attempts_before_fail = 0;
 
 	result = libcnotify_stream_set(
 	          stderr,
@@ -324,7 +324,7 @@ int cnotify_test_stream_open(
 
 	/* Test libcnotify_stream_open with fclose failing
 	 */
-	cnotify_test_fclose_attempts_before_fail = 1;
+	cnotify_test_fclose_attempts_before_fail = 0;
 
 	result = libcnotify_stream_open(
 	          filename,
@@ -472,7 +472,7 @@ int cnotify_test_stream_close(
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
 	/* Test libcnotify_stream_close with fclose failing
 	 */
-	cnotify_test_fclose_attempts_before_fail = 1;
+	cnotify_test_fclose_attempts_before_fail = 0;
 
 	result = libcnotify_stream_close(
 	          &error );
