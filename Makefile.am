@@ -16,10 +16,9 @@ DPKG_FILES = \
 	dpkg/compat \
 	dpkg/control \
 	dpkg/copyright \
-	dpkg/copyright.in \
 	dpkg/rules \
-	dpkg/libcnotify-dev.docs \
-	dpkg/libcnotify.docs \
+	dpkg/libcnotify-dev.install \
+	dpkg/libcnotify.install \
 	dpkg/source/format
 
 GETTEXT_FILES = \
