@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #endif
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
 #define __USE_GNU
 #include <dlfcn.h>
 #undef __USE_GNU
@@ -38,7 +38,7 @@
 #include "cnotify_test_macros.h"
 #include "cnotify_test_unused.h"
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
 
 static FILE *(*cnotify_test_real_fopen)(const char *, const char *) = NULL;
 static int (*cnotify_test_real_fclose)(FILE *)                      = NULL;
@@ -108,7 +108,7 @@ int fclose(
 	return( print_count );
 }
 
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
 
 /* Tests the libcnotify_stream_set function
  * Returns 1 if successful or 0 if not
@@ -204,7 +204,7 @@ int cnotify_test_stream_set(
 	 "error",
 	 error );
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
 	/* Test libcnotify_stream_close with fclose failing
 	 */
 	cnotify_test_fclose_attempts_before_fail = 0;
@@ -231,7 +231,7 @@ int cnotify_test_stream_set(
 		libcerror_error_free(
 		 &error );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
 
 	/* Clean up
 	 */
@@ -342,7 +342,7 @@ int cnotify_test_stream_open(
 	libcerror_error_free(
 	 &error );
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
 #if defined( WINAPI ) && !defined( __CYGWIN__ )
 	filename = _tempnam(
 	            "C:\\Windows\\Temp",
@@ -382,9 +382,9 @@ int cnotify_test_stream_open(
 		libcerror_error_free(
 		 &error );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
 	/* Test libcnotify_stream_open with fopen failing
 	 */
 	cnotify_test_fopen_attempts_before_fail = 0;
@@ -413,7 +413,7 @@ int cnotify_test_stream_open(
 	}
 /* TODO test fail with different errno values */
 
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
 
 	/* Clean up
 	 */
@@ -532,7 +532,7 @@ int cnotify_test_stream_close(
 	 "error",
 	 error );
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
 	/* Test libcnotify_stream_close with fclose failing
 	 */
 	cnotify_test_fclose_attempts_before_fail = 0;
@@ -558,7 +558,7 @@ int cnotify_test_stream_close(
 		libcerror_error_free(
 		 &error );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) */
+#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
 
 	return( 1 );
 
