@@ -168,7 +168,7 @@ on_error:
 	return( 0 );
 }
 
-#if defined( __GNUC__ )
+#if defined( __GNUC__ ) && !defined( LIBCNOTIFY_DLL_IMPORT )
 
 /* Tests the libcnotify_print_data_as_character function
  * Returns 1 if successful or 0 if not
@@ -568,7 +568,7 @@ on_error:
 	return( 0 );
 }
 
-#endif /* defined( __GNUC__ ) */
+#endif /* defined( __GNUC__ ) && !defined( LIBCNOTIFY_DLL_IMPORT ) */
 
 /* Tests the libcnotify_print_data function
  * Returns 1 if successful or 0 if not
@@ -922,7 +922,7 @@ int main(
 	 "libcnotify_printf",
 	 cnotify_test_printf );
 
-#if defined( __GNUC__ )
+#if defined( __GNUC__ ) && !defined( LIBCNOTIFY_DLL_IMPORT )
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_print_data_as_character",
@@ -936,7 +936,7 @@ int main(
 	 "libcnotify_print_data_as_hexadecimal",
 	 cnotify_test_print_data_as_hexadecimal );
 
-#endif /* defined( __GNUC__ ) */
+#endif /* defined( __GNUC__ ) && !defined( LIBCNOTIFY_DLL_IMPORT ) */
 
 	CNOTIFY_TEST_RUN(
 	 "libcnotify_print_data",
