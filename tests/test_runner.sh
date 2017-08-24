@@ -1,7 +1,7 @@
 #!/bin/bash
 # Bash functions to run an executable for testing.
 #
-# Version: 20170824
+# Version: 20170825
 #
 # When CHECK_WITH_ASAN is set to a non-empty value the test executable
 # is run with asan, otherwise it is run without.
@@ -506,6 +506,18 @@ run_test_with_arguments()
 				DYLD_LIBRARY_PATH="${LIBRARY_PATH}" valgrind ${VALGRIND_OPTIONS[@]} "${TEST_EXECUTABLE}" ${ARGUMENTS[@]};
 				RESULT=$?;
 			fi
+
+		elif test "${PLATFORM}" = "CYGWIN_NT";
+		then
+			if test ${IS_PYTHON_SCRIPT} -eq 0;
+			then
+				PATH="${LIBRARY_PATH}:${PATH}" PYTHONPATH="${PYTHON_MODULE_PATH}" valgrind ${VALGRIND_OPTIONS[@]} "${PYTHON}" "${TEST_EXECUTABLE}" ${ARGUMENTS[@]};
+				RESULT=$?;
+			else
+				PATH="${LIBRARY_PATH}:${PATH}" valgrind ${VALGRIND_OPTIONS[@]} "${TEST_EXECUTABLE}" ${ARGUMENTS[@]};
+				RESULT=$?;
+			fi
+
 		else
 			if test ${IS_PYTHON_SCRIPT} -eq 0;
 			then
@@ -774,6 +786,18 @@ run_test_with_input_and_arguments()
 				DYLD_LIBRARY_PATH="${LIBRARY_PATH}" valgrind ${VALGRIND_OPTIONS[@]} "${TEST_EXECUTABLE}" ${ARGUMENTS[@]} "${INPUT_FILE}";
 				RESULT=$?;
 			fi
+
+		elif test "${PLATFORM}" = "CYGWIN_NT";
+		then
+			if test ${IS_PYTHON_SCRIPT} -eq 0;
+			then
+				PATH="${LIBRARY_PATH}:${PATH}" PYTHONPATH="${PYTHON_MODULE_PATH}" valgrind ${VALGRIND_OPTIONS[@]} "${PYTHON}" "${TEST_EXECUTABLE}" ${ARGUMENTS[@]} "${INPUT_FILE}";
+				RESULT=$?;
+			else
+				PATH="${LIBRARY_PATH}:${PATH}" valgrind ${VALGRIND_OPTIONS[@]} "${TEST_EXECUTABLE}" ${ARGUMENTS[@]} "${INPUT_FILE}";
+				RESULT=$?;
+			fi
+
 		else
 			if test ${IS_PYTHON_SCRIPT} -eq 0;
 			then
