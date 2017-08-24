@@ -21,6 +21,7 @@
 
 #include <common.h>
 #include <file_stream.h>
+#include <memory.h>
 #include <types.h>
 
 #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
@@ -163,6 +164,11 @@ int cnotify_test_stream_set(
 	 "error",
 	 error );
 
+	memory_free(
+	 filename );
+
+	filename = NULL;
+
 	result = libcnotify_stream_set(
 	          stderr,
 	          &error );
@@ -203,6 +209,11 @@ int cnotify_test_stream_set(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
+
+	memory_free(
+	 filename );
+
+	filename = NULL;
 
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
 	/* Test libcnotify_stream_close with fclose failing
@@ -255,6 +266,11 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
+	if( filename != NULL )
+	{
+		memory_free(
+		 filename );
+	}
 	return( 0 );
 }
 
@@ -296,6 +312,11 @@ int cnotify_test_stream_open(
 	 "error",
 	 error );
 
+	memory_free(
+	 filename );
+
+	filename = NULL;
+
 	/* Test open after open
 	 */
 #if defined( WINAPI ) && !defined( __CYGWIN__ )
@@ -323,6 +344,11 @@ int cnotify_test_stream_open(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
+
+	memory_free(
+	 filename );
+
+	filename = NULL;
 
 	/* Test error cases
 	 */
@@ -382,6 +408,7 @@ int cnotify_test_stream_open(
 		libcerror_error_free(
 		 &error );
 	}
+
 #endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
 
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
@@ -411,9 +438,15 @@ int cnotify_test_stream_open(
 		libcerror_error_free(
 		 &error );
 	}
+
 /* TODO test fail with different errno values */
 
 #endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
+
+	memory_free(
+	 filename );
+
+	filename = NULL;
 
 	/* Clean up
 	 */
@@ -436,6 +469,11 @@ on_error:
 	{
 		libcerror_error_free(
 		 &error );
+	}
+	if( filename != NULL )
+	{
+		memory_free(
+		 filename );
 	}
 	return( 0 );
 }
@@ -492,6 +530,11 @@ int cnotify_test_stream_close(
 	 "error",
 	 error );
 
+	memory_free(
+	 filename );
+
+	filename = NULL;
+
 	result = libcnotify_stream_close(
 	          &error );
 
@@ -532,6 +575,11 @@ int cnotify_test_stream_close(
 	 "error",
 	 error );
 
+	memory_free(
+	 filename );
+
+	filename = NULL;
+
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
 	/* Test libcnotify_stream_close with fclose failing
 	 */
@@ -567,6 +615,11 @@ on_error:
 	{
 		libcerror_error_free(
 		 &error );
+	}
+	if( filename != NULL )
+	{
+		memory_free(
+		 filename );
 	}
 	return( 0 );
 }
