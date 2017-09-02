@@ -164,8 +164,13 @@ int cnotify_test_stream_set(
 	 "error",
 	 error );
 
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	memory_free(
 	 filename );
+#endif
 
 	filename = NULL;
 
@@ -210,8 +215,13 @@ int cnotify_test_stream_set(
 	 "error",
 	 error );
 
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	memory_free(
 	 filename );
+#endif
 
 	filename = NULL;
 
@@ -266,11 +276,16 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	if( filename != NULL )
 	{
 		memory_free(
 		 filename );
 	}
+#endif
 	return( 0 );
 }
 
@@ -312,8 +327,13 @@ int cnotify_test_stream_open(
 	 "error",
 	 error );
 
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	memory_free(
 	 filename );
+#endif
 
 	filename = NULL;
 
@@ -345,8 +365,13 @@ int cnotify_test_stream_open(
 	 "error",
 	 error );
 
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	memory_free(
 	 filename );
+#endif
 
 	filename = NULL;
 
@@ -443,8 +468,13 @@ int cnotify_test_stream_open(
 
 #endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
 
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	memory_free(
 	 filename );
+#endif
 
 	filename = NULL;
 
@@ -470,11 +500,16 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	if( filename != NULL )
 	{
 		memory_free(
 		 filename );
 	}
+#endif
 	return( 0 );
 }
 
@@ -530,8 +565,13 @@ int cnotify_test_stream_close(
 	 "error",
 	 error );
 
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	memory_free(
 	 filename );
+#endif
 
 	filename = NULL;
 
@@ -575,8 +615,13 @@ int cnotify_test_stream_close(
 	 "error",
 	 error );
 
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	memory_free(
 	 filename );
+#endif
 
 	filename = NULL;
 
@@ -616,11 +661,16 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
+#if !defined( WINAPI ) || defined( __CYGWIN__ )
+	/* tempnam() will return a newly allocated string
+	 * _tempnam() will return a static string
+	 */
 	if( filename != NULL )
 	{
 		memory_free(
 		 filename );
 	}
+#endif
 	return( 0 );
 }
 
