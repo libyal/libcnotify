@@ -65,16 +65,16 @@ build_script:
     msbuild vs2017\libcnotify.sln /property:Platform=x64 /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" )
 - cmd: if [%TARGET%]==[cygwin] (
     xcopy /i /q /s C:\projects\libcnotify C:\cygwin\home\appveyor\libcnotify &&
-    C:\cygwin\bin\bash -e -l -c "cd libcnotify && ./synclibs.sh && ./autogen.sh" )
+    C:\cygwin\bin\bash -e -l -c "cd libcnotify && ./synclibs.sh --use-head && ./autogen.sh" )
 - cmd: if [%TARGET%]==[cygwin64] (
     xcopy /i /q /s C:\projects\libcnotify C:\cygwin64\home\appveyor\libcnotify &&
-    C:\cygwin64\bin\bash -e -l -c "cd libcnotify && ./synclibs.sh && ./autogen.sh" )
+    C:\cygwin64\bin\bash -e -l -c "cd libcnotify && ./synclibs.sh --use-head && ./autogen.sh" )
 - cmd: if [%TARGET%]==[mingw] (
     xcopy /i /q /s C:\projects\libcnotify C:\MinGW\msys\1.0\home\appveyor\libcnotify &&
-    C:\MinGW\msys\1.0\bin\bash -e -l -c "cd libcnotify && sed 's/@VERSION@/0.29/g' m4/pkg.m4.in > m4/pkg.m4 && ./synclibs.sh && ./autogen.sh" )
+    C:\MinGW\msys\1.0\bin\bash -e -l -c "cd libcnotify && sed 's/@VERSION@/0.29/g' m4/pkg.m4.in > m4/pkg.m4 && ./synclibs.sh --use-head && ./autogen.sh" )
 - cmd: if [%TARGET%]==[mingw-w64] (
     xcopy /i /q /s C:\projects\libcnotify C:\msys64\home\appveyor\libcnotify &&
-    C:\msys64\usr\bin\bash -e -l -c "cd libcnotify && ./synclibs.sh && ./autogen.sh" )
+    C:\msys64\usr\bin\bash -e -l -c "cd libcnotify && ./synclibs.sh --use-head && ./autogen.sh" )
 
 test_script:
 - cmd: rem Run tests
