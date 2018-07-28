@@ -28,13 +28,6 @@
  */
 #if !defined( HAVE_LOCAL_LIBCNOTIFY )
 
-/* If libtool DLL support is enabled set LIBCNOTIFY_DLL_EXPORT
- * before including libcnotify/extern.h
- */
-#if defined( _WIN32 ) && defined( DLL_EXPORT )
-#define LIBCNOTIFY_DLL_EXPORT
-#endif
-
 #include <libcnotify/extern.h>
 
 #define LIBCNOTIFY_EXTERN_VARIABLE	LIBCNOTIFY_EXTERN

@@ -24,13 +24,6 @@
 
 #include <common.h>
 
-/* If Cygwin libtool DLL support is enabled and do not want to create static
- * executables set LIBCNOTIFY_DLL_IMPORT before including libcnotify.h
- */
-#if defined( _WIN32 ) && defined( DLL_EXPORT ) && !defined( HAVE_STATIC_EXECUTABLES )
-#define LIBCNOTIFY_DLL_IMPORT
-#endif
-
 #include <libcnotify.h>
 
 #endif /* !defined( _CNOTIFY_TEST_LIBCNOTIFY_H ) */
