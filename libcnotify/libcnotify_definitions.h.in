@@ -50,5 +50,5 @@ enum LIBCNOTIFY_NOTIFY_PRINT_DATA_FLAGS
 
 #endif /* !defined( HAVE_LOCAL_LIBCNOTIFY ) */
 
-#endif
+#endif /* !defined( LIBCNOTIFY_INTERNAL_DEFINITIONS_H ) */
 
