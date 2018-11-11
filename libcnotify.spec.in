@@ -10,15 +10,15 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 @libcnotify_spec_requires@ @ax_libcerror_spec_requires@
 BuildRequires: gcc @ax_libcerror_spec_build_requires@
 
-%description
+%description -n libcnotify
 Library to support cross-platform C notification functions
 
-%package devel
+%package -n libcnotify-devel
 Summary: Header files and libraries for developing applications for libcnotify
 Group: Development/Libraries
 Requires: libcnotify = %{version}-%{release}
 
-%description devel
+%description -n libcnotify-devel
 Header files and libraries for developing applications for libcnotify.
 
 %prep
@@ -39,13 +39,13 @@ rm -rf %{buildroot}
 
 %postun -p /sbin/ldconfig
 
-%files
+%files -n libcnotify
 %defattr(644,root,root,755)
 %license COPYING
 %doc AUTHORS README
 %attr(755,root,root) %{_libdir}/*.so.*
 
-%files devel
+%files -n libcnotify-devel
 %defattr(644,root,root,755)
 %license COPYING
 %doc AUTHORS README ChangeLog
