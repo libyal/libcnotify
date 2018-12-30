@@ -9,6 +9,8 @@ Homepage: https://github.com/libyal/libcnotify
 Package: libcnotify
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libcnotify1
+Replaces: libcnotify1
 Suggests: libcnotify-dbg
 Description: Library to support cross-platform C notification functions
  libcnotify is a library to support cross-platform C notification functions.
