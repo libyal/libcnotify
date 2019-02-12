@@ -13,6 +13,14 @@ BuildRequires: gcc @ax_libcerror_spec_build_requires@
 %description -n libcnotify
 Library to support cross-platform C notification functions
 
+%package -n libcnotify-static
+Summary: Library to support cross-platform C notification functions
+Group: Development/Libraries
+Requires: libcnotify = %{version}-%{release}
+
+%description -n libcnotify-static
+Static library version of libcnotify.
+
 %package -n libcnotify-devel
 Summary: Header files and libraries for developing applications for libcnotify
 Group: Development/Libraries
@@ -45,11 +53,16 @@ rm -rf %{buildroot}
 %doc AUTHORS README
 %attr(755,root,root) %{_libdir}/*.so.*
 
+%files -n libcnotify-static
+%defattr(644,root,root,755)
+%license COPYING
+%doc AUTHORS README
+%attr(755,root,root) %{_libdir}/*.a
+
 %files -n libcnotify-devel
 %defattr(644,root,root,755)
 %license COPYING
 %doc AUTHORS README
-%{_libdir}/*.a
 %{_libdir}/*.la
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/libcnotify.pc
