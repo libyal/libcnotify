@@ -1,11 +1,9 @@
-.Dd January  7, 2017
+.Dd March 15, 2019
 .Dt libcnotify 3
 .Os libcnotify
 .Sh NAME
 .Nm libcnotify.h
 .Nd Library to support cross-platform C notification functions
-.Sh LIBRARY
-.Lb libcnotify
 .Sh SYNOPSIS
 .In libcnotify.h
 .Pp
@@ -15,9 +13,9 @@ Support functions
 .Pp
 Stream functions
 .Ft int
-.Fn libcnotify_stream_set "FILE *stream, libcnotify_error_t **error"
+.Fn libcnotify_stream_set "FILE *stream" "libcnotify_error_t **error"
 .Ft int
-.Fn libcnotify_stream_open "const char *filename, libcnotify_error_t **error"
+.Fn libcnotify_stream_open "const char *filename" "libcnotify_error_t **error"
 .Ft int
 .Fn libcnotify_stream_close "libcnotify_error_t **error"
 .Pp
@@ -27,9 +25,9 @@ Verbose functions
 .Pp
 Print functions
 .Ft int
-.Fn libcnotify_printf "const char *format, ..."
+.Fn libcnotify_printf "const char *format" "..."
 .Ft int
-.Fn libcnotify_print_data "const uint8_t *data, size_t data_size, uint8_t print_data_flags"
+.Fn libcnotify_print_data "const uint8_t *data" "size_t data_size" "uint8_t print_data_flags"
 .Ft int
 .Fn libcnotify_print_error_backtrace "libcnotify_error_t *error"
 .Sh DESCRIPTION
@@ -49,7 +47,7 @@ Please report bugs of any kind on the project issue tracker: https://github.com/
 These man pages are generated from "libcnotify.h".
 .Sh COPYRIGHT
 Copyright (C) 2008-2019, Joachim Metz <joachim.metz@gmail.com>.
-
+.sp
 This is free software; see the source for copying conditions.
 There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 .Sh SEE ALSO
