@@ -267,9 +267,12 @@ int libcnotify_print_data(
 	{
 		return( 0 );
 	}
-	if( data == NULL )
+	if( data_size > 0 )
 	{
-		return( -1 );
+		if( data == NULL )
+		{
+			return( -1 );
+		}
 	}
 	if( data_size > (size_t) SSIZE_MAX )
 	{
