@@ -25,7 +25,7 @@ then
 
 		make install DESTDIR=${PWD}/osx-pkg;
 		mkdir -p ${PWD}/osx-pkg/usr/share/doc/libcnotify;
-		cp AUTHORS COPYING NEWS README ${PWD}/osx-pkg/usr/share/doc/libcnotify;
+		cp AUTHORS COPYING COPYING.LESSER NEWS README ${PWD}/osx-pkg/usr/share/doc/libcnotify;
 
 		pkgbuild --root osx-pkg --identifier com.github.libyal.libcnotify --version ${VERSION} --ownership recommended ../libcnotify-${VERSION}.pkg;
 	fi
