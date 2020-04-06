@@ -1,6 +1,6 @@
-# Tests C library functions and types.
+# Tests library functions and types.
 #
-# Version: 20200126
+# Version: 20200405
 
 $ExitSuccess = 0
 $ExitFailure = 1
@@ -8,6 +8,7 @@ $ExitIgnore = 77
 
 $LibraryTests = "print stream support"
 $LibraryTestsWithInput = ""
+$OptionSets = "";
 
 $InputGlob = "*"
 
@@ -37,9 +38,9 @@ Function GetTestSetDirectory
 	Return ${TestSetDirectory}
 }
 
-Function GetTestToolDirectory
+Function GetTestExecutablesDirectory
 {
-	$TestToolDirectory = ""
+	$TestExecutablesDirectory = ""
 
 	ForEach (${VSDirectory} in "msvscpp vs2008 vs2010 vs2012 vs2013 vs2015 vs2017 vs2019" -split " ")
 	{
@@ -47,22 +48,22 @@ Function GetTestToolDirectory
 		{
 			ForEach (${VSPlatform} in "Win32 x64" -split " ")
 			{
-				$TestToolDirectory = "..\${VSDirectory}\${VSConfiguration}\${VSPlatform}"
+				$TestExecutablesDirectory = "..\${VSDirectory}\${VSConfiguration}\${VSPlatform}"
 
-				If (Test-Path ${TestToolDirectory})
+				If (Test-Path ${TestExecutablesDirectory})
 				{
-					Return ${TestToolDirectory}
+					Return ${TestExecutablesDirectory}
 				}
 			}
-			$TestToolDirectory = "..\${VSDirectory}\${VSConfiguration}"
+			$TestExecutablesDirectory = "..\${VSDirectory}\${VSConfiguration}"
 
-			If (Test-Path ${TestToolDirectory})
+			If (Test-Path ${TestExecutablesDirectory})
 			{
-				Return ${TestToolDirectory}
+				Return ${TestExecutablesDirectory}
 			}
 		}
 	}
-	Return ${TestToolDirectory}
+	Return ${TestExecutablesDirectory}
 }
 
 Function ReadIgnoreList
@@ -84,7 +85,7 @@ Function RunTest
 	param( [string]$TestType )
 
 	$TestDescription = "Testing: ${TestName}"
-	$TestExecutable = "${TestToolDirectory}\cnotify_test_${TestName}.exe"
+	$TestExecutable = "${TestExecutablesDirectory}\cnotify_test_${TestName}.exe"
 
 	$Output = Invoke-Expression ${TestExecutable}
 	$Result = ${LastExitCode}
@@ -111,7 +112,7 @@ Function RunTestWithInput
 	param( [string]$TestType )
 
 	$TestDescription = "Testing: ${TestName}"
-	$TestExecutable = "${TestToolDirectory}\cnotify_test_${TestName}.exe"
+	$TestExecutable = "${TestExecutablesDirectory}\cnotify_test_${TestName}.exe"
 
 	$TestProfileDirectory = GetTestProfileDirectory "input" "libcnotify"
 
@@ -172,11 +173,11 @@ Function RunTestWithInput
 	Return ${Result}
 }
 
-$TestToolDirectory = GetTestToolDirectory
+$TestExecutablesDirectory = GetTestExecutablesDirectory
 
-If (-Not (Test-Path ${TestToolDirectory}))
+If (-Not (Test-Path ${TestExecutablesDirectory}))
 {
-	Write-Host "Missing test tool directory." -foreground Red
+	Write-Host "Missing test executables directory." -foreground Red
 
 	Exit ${ExitFailure}
 }
