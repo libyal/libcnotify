@@ -18,9 +18,9 @@ MAINTAINERCLEANFILES = \
 	Makefile.in
 
 distclean: clean
-	/bin/rm -f libcnotify.h
-	/bin/rm -f libcnotify/definitions.h
-	/bin/rm -f libcnotify/features.h
-	/bin/rm -f libcnotify/types.h
-	/bin/rm -f Makefile
+	-rm -f libcnotify.h
+	-rm -f libcnotify/definitions.h
+	-rm -f libcnotify/features.h
+	-rm -f libcnotify/types.h
+	-rm -f Makefile
 
