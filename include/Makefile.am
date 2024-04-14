@@ -14,13 +14,11 @@ EXTRA_DIST = \
 	libcnotify/features.h.in \
 	libcnotify/types.h.in
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	libcnotify.h \
+	libcnotify/definitions.h \
+	libcnotify/features.h \
+	libcnotify/types.h \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f libcnotify.h
-	-rm -f libcnotify/definitions.h
-	-rm -f libcnotify/features.h
-	-rm -f libcnotify/types.h
-	-rm -f Makefile
 

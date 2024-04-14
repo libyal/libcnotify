@@ -1,6 +1,6 @@
 AM_CPPFLAGS = \
-	-I$(top_srcdir)/include \
-	-I$(top_srcdir)/common \
+	-I../include -I$(top_srcdir)/include \
+	-I../common -I$(top_srcdir)/common \
 	@LIBCERROR_CPPFLAGS@ \
 	@LIBCNOTIFY_DLL_EXPORT@
 
@@ -27,13 +27,11 @@ EXTRA_DIST = \
 	libcnotify.rc \
 	libcnotify.rc.in
 
-MAINTAINERCLEANFILES = \
+DISTCLEANFILES = \
+	libcnotify_definitions.h \
+	libcnotify.rc \
+	Makefile \
 	Makefile.in
-
-distclean: clean
-	-rm -f libcnotify_definitions.h
-	-rm -f libcnotify.rc
-	-rm -f Makefile
 
 sources-local: $(BUILT_SOURCES)
 
