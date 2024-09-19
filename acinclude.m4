@@ -1,6 +1,6 @@
 dnl Checks for required headers and functions
 dnl
-dnl Version: 20240512
+dnl Version: 20240513
 
 dnl Function to detect if libcnotify dependencies are available
 AC_DEFUN([AX_LIBCNOTIFY_CHECK_LOCAL],
