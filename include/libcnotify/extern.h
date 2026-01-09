@@ -33,12 +33,14 @@
 #define LIBCNOTIFY_EXTERN __declspec(dllexport)
 
 #elif defined( LIBCNOTIFY_DLL_IMPORT )
-#define LIBCNOTIFY_EXTERN extern __declspec(dllimport)
+#define LIBCNOTIFY_EXTERN __declspec(dllimport)
 
 #else
-#define LIBCNOTIFY_EXTERN extern
+#define LIBCNOTIFY_EXTERN
 
 #endif
+
+#define LIBCNOTIFY_EXTERN_VARIABLE extern LIBCNOTIFY_EXTERN
 
 #endif /* !defined( _LIBCNOTIFY_EXTERN_H ) */
 
