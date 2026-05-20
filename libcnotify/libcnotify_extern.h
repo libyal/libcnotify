@@ -30,12 +30,6 @@
 
 #include <libcnotify/extern.h>
 
-#if defined( __CYGWIN__ ) || defined( __MINGW32__ )
-#define LIBCNOTIFY_EXTERN_VARIABLE	extern
-#else
-#define LIBCNOTIFY_EXTERN_VARIABLE	LIBCNOTIFY_EXTERN
-#endif
-
 #else
 #define LIBCNOTIFY_EXTERN		/* extern */
 #define LIBCNOTIFY_EXTERN_VARIABLE	extern

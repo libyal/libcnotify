@@ -78,7 +78,7 @@ int libcnotify_stream_close(
 
 /* Value to indicate if the verbose notification is active
  */
-LIBCNOTIFY_EXTERN \
+LIBCNOTIFY_EXTERN_VARIABLE \
 int libcnotify_verbose;
 
 /* Sets the verbose notification
