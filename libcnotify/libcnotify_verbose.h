@@ -31,12 +31,8 @@
 extern "C" {
 #endif
 
-#if defined( __CYGWIN__ ) && ( __GNUC__ < 10 )
-int libcnotify_verbose;
-#else
 LIBCNOTIFY_EXTERN_VARIABLE \
 int libcnotify_verbose;
-#endif
 
 LIBCNOTIFY_EXTERN \
 void libcnotify_verbose_set(

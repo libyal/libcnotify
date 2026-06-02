@@ -34,6 +34,9 @@
 extern "C" {
 #endif
 
+LIBCNOTIFY_INTERNAL \
+FILE *libcnotify_stream;
+
 LIBCNOTIFY_EXTERN \
 int libcnotify_stream_set(
      FILE *stream,

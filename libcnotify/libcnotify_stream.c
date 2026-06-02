@@ -37,7 +37,7 @@ FILE *libcnotify_stream = NULL;
 /* Value to indicate if the notification stream
  * was opened by the library
  */
-int libcnotify_stream_opened_in_library = 0;
+static int libcnotify_stream_opened_in_library = 0;
 
 /* Set the stream
  * Returns 1 if successful or -1 on error
@@ -107,7 +107,7 @@ int libcnotify_stream_open(
 	libcnotify_stream = file_stream_open(
 	                    filename,
 	                    FILE_STREAM_OPEN_APPEND );
-	
+
 	if( libcnotify_stream == NULL )
 	{
 		switch( errno )

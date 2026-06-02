@@ -28,10 +28,14 @@
 #include <stdlib.h>
 #endif
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
 #define __USE_GNU
 #include <dlfcn.h>
 #undef __USE_GNU
+#endif
+
+#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#define HAVE_CNOTIFY_TEST_FUNCTION_HOOK	1
 #endif
 
 #include "cnotify_test_libcerror.h"
@@ -41,7 +45,7 @@
 
 #include "../libcnotify/libcnotify_print.h"
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 
 static int (*cnotify_test_real_vfprintf)(FILE *, const char *, va_list) = NULL;
 
@@ -81,7 +85,7 @@ int vfprintf(
 	return( print_count );
 }
 
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
+#endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
 /* Tests the libcnotify_printf function
  * Returns 1 if successful or 0 if not
@@ -118,7 +122,7 @@ int cnotify_test_printf(
 
 	/* Test error cases
 	 */
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 1;
@@ -137,7 +141,7 @@ int cnotify_test_printf(
 		 print_count,
 		 -1 );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
+#endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
 	/* Test print without stream
 	 */
@@ -215,7 +219,7 @@ int cnotify_test_print_data_as_character(
 
 	/* Test error cases
 	 */
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 1;
@@ -234,7 +238,7 @@ int cnotify_test_print_data_as_character(
 		 print_count,
 		 -1 );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
+#endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
 	return( 1 );
 
@@ -340,7 +344,7 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 -1 );
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 0;
@@ -379,7 +383,7 @@ int cnotify_test_print_data_as_characters(
 		 print_count,
 		 -1 );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
+#endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
 	return( 1 );
 
@@ -485,7 +489,7 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 -1 );
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 0;
@@ -560,7 +564,7 @@ int cnotify_test_print_data_as_hexadecimal(
 		 print_count,
 		 -1 );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
+#endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
 	return( 1 );
 
@@ -638,7 +642,7 @@ int cnotify_test_print_data(
 	 print_count,
 	 -1 );
 
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 	/* Test libcnotify_printf with vfprintf failing in libcnotify_printf
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 0;
@@ -759,7 +763,7 @@ int cnotify_test_print_data(
 		 print_count,
 		 -1 );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
+#endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
 	/* Test with grouping
 	 */
@@ -785,7 +789,7 @@ int cnotify_test_print_data(
 
 	/* Test error cases
 	 */
-#if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ )
+#if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 1;
@@ -806,7 +810,7 @@ int cnotify_test_print_data(
 		 print_count,
 		 -1 );
 	}
-#endif /* defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ ) && !defined( __clang__ ) && !defined( __CYGWIN__ ) */
+#endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
 	/* Test print without stream
 	 */
