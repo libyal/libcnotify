@@ -37,8 +37,6 @@
 #include "libcnotify_print.h"
 #include "libcnotify_stream.h"
 
-extern FILE *libcnotify_stream;
-
 #if defined( HAVE_STDARG_H ) || defined( WINAPI )
 #define VARARGS( function, type, argument ) \
 	function( type argument, ... )

@@ -45,7 +45,7 @@
 
 #else
 #define LIBCNOTIFY_EXTERN		/* extern */
-#define LIBCNOTIFY_EXTERN_VARIABLE	extern
+#define LIBCNOTIFY_EXTERN_VARIABLE	LIBCNOTIFY_INTERNAL
 
 #endif /* !defined( HAVE_LOCAL_LIBCNOTIFY ) */
 
