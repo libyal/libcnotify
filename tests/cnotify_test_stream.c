@@ -24,8 +24,20 @@
 #include <memory.h>
 #include <types.h>
 
+#if defined( HAVE_FCNTL_H ) || defined( WINAPI )
+#include <fcntl.h>
+#endif
+
+#if defined( HAVE_IO_H ) || defined( WINAPI )
+#include <io.h>
+#endif
+
 #if defined( HAVE_STDLIB_H ) || defined( WINAPI )
 #include <stdlib.h>
+#endif
+
+#if defined( HAVE_UNISTD_H )
+#include <unistd.h>
 #endif
 
 #if defined( HAVE_GNU_DL_DLSYM ) && defined( __GNUC__ )
@@ -121,9 +133,28 @@ int fclose(
 int cnotify_test_stream_set(
      void )
 {
+	char filename[ 16 ]      = "cnotifyXXXXXX";
+
 	libcerror_error_t *error = NULL;
-	char *filename           = NULL;
 	int result               = 0;
+
+	/* Initialize test
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	result = _mktemp_s(
+	          filename,
+	          16 );
+#else
+	result = mkstemp(
+	          filename );
+#endif
+	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	close(
+	 result );
 
 	/* Test set of stderr
 	 */
@@ -142,19 +173,6 @@ int cnotify_test_stream_set(
 
 	/* Test set stderr after open
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
-	filename = _tempnam(
-	            "C:\\Windows\\Temp",
-	            "cnotify" );
-#else
-	filename = tempnam(
-	            "/tmp",
-	            "cnotify" );
-#endif
-	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
-	 "filename",
-	 filename );
-
 	result = libcnotify_stream_open(
 	          filename,
 	          &error );
@@ -167,16 +185,6 @@ int cnotify_test_stream_set(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	memory_free(
-	 filename );
-#endif
-
-	filename = NULL;
 
 	result = libcnotify_stream_set(
 	          stderr,
@@ -193,19 +201,6 @@ int cnotify_test_stream_set(
 
 	/* Test error cases
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
-	filename = _tempnam(
-	            "C:\\Windows\\Temp",
-	            "cnotify" );
-#else
-	filename = tempnam(
-	            "/tmp",
-	            "cnotify" );
-#endif
-	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
-	 "filename",
-	 filename );
-
 	result = libcnotify_stream_open(
 	          filename,
 	          &error );
@@ -218,16 +213,6 @@ int cnotify_test_stream_set(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	memory_free(
-	 filename );
-#endif
-
-	filename = NULL;
 
 #if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 	/* Test libcnotify_stream_close with fclose failing
@@ -280,16 +265,6 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	if( filename != NULL )
-	{
-		memory_free(
-		 filename );
-	}
-#endif
 	return( 0 );
 }
 
@@ -299,25 +274,31 @@ on_error:
 int cnotify_test_stream_open(
      void )
 {
+	char filename[ 16 ]      = "cnotifyXXXXXX";
+
 	libcerror_error_t *error = NULL;
-	char *filename           = NULL;
 	int result               = 0;
+
+	/* Initialize test
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	result = _mktemp_s(
+	          filename,
+	          16 );
+#else
+	result = mkstemp(
+	          filename );
+#endif
+	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	close(
+	 result );
 
 	/* Test open
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
-	filename = _tempnam(
-	            "C:\\Windows\\Temp",
-	            "cnotify" );
-#else
-	filename = tempnam(
-	            "/tmp",
-	            "cnotify" );
-#endif
-	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
-	 "filename",
-	 filename );
-
 	result = libcnotify_stream_open(
 	          filename,
 	          &error );
@@ -330,32 +311,9 @@ int cnotify_test_stream_open(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	memory_free(
-	 filename );
-#endif
-
-	filename = NULL;
 
 	/* Test open after open
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
-	filename = _tempnam(
-	            "C:\\Windows\\Temp",
-	            "cnotify" );
-#else
-	filename = tempnam(
-	            "/tmp",
-	            "cnotify" );
-#endif
-	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
-	 "filename",
-	 filename );
-
 	result = libcnotify_stream_open(
 	          filename,
 	          &error );
@@ -368,16 +326,6 @@ int cnotify_test_stream_open(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	memory_free(
-	 filename );
-#endif
-
-	filename = NULL;
 
 	/* Test error cases
 	 */
@@ -398,19 +346,6 @@ int cnotify_test_stream_open(
 	 &error );
 
 #if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
-	filename = _tempnam(
-	            "C:\\Windows\\Temp",
-	            "cnotify" );
-#else
-	filename = tempnam(
-	            "/tmp",
-	            "cnotify" );
-#endif
-	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
-	 "filename",
-	 filename );
-
 	/* Test libcnotify_stream_open with fclose failing
 	 */
 	cnotify_test_fclose_attempts_before_fail = 0;
@@ -472,16 +407,6 @@ int cnotify_test_stream_open(
 
 #endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	memory_free(
-	 filename );
-#endif
-
-	filename = NULL;
-
 	/* Clean up
 	 */
 	result = libcnotify_stream_close(
@@ -504,16 +429,6 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	if( filename != NULL )
-	{
-		memory_free(
-		 filename );
-	}
-#endif
 	return( 0 );
 }
 
@@ -523,9 +438,28 @@ on_error:
 int cnotify_test_stream_close(
      void )
 {
+	char filename[ 16 ]      = "cnotifyXXXXXX";
+
 	libcerror_error_t *error = NULL;
-	char *filename           = NULL;
 	int result               = 0;
+
+	/* Initialize test
+	 */
+#if defined( WINAPI ) && !defined( __CYGWIN__ )
+	result = _mktemp_s(
+	          filename,
+	          16 );
+#else
+	result = mkstemp(
+	          filename );
+#endif
+	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+	 "result",
+	 result,
+	 -1 );
+
+	close(
+	 result );
 
 	/* Test close after open
 	 */
@@ -543,19 +477,6 @@ int cnotify_test_stream_close(
 
 	/* Test close after open
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
-	filename = _tempnam(
-	            "C:\\Windows\\Temp",
-	            "cnotify" );
-#else
-	filename = tempnam(
-	            "/tmp",
-	            "cnotify" );
-#endif
-	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
-	 "filename",
-	 filename );
-
 	result = libcnotify_stream_open(
 	          filename,
 	          &error );
@@ -568,16 +489,6 @@ int cnotify_test_stream_close(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	memory_free(
-	 filename );
-#endif
-
-	filename = NULL;
 
 	result = libcnotify_stream_close(
 	          &error );
@@ -593,19 +504,6 @@ int cnotify_test_stream_close(
 
 	/* Test error cases
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
-	filename = _tempnam(
-	            "C:\\Windows\\Temp",
-	            "cnotify" );
-#else
-	filename = tempnam(
-	            "/tmp",
-	            "cnotify" );
-#endif
-	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
-	 "filename",
-	 filename );
-
 	result = libcnotify_stream_open(
 	          filename,
 	          &error );
@@ -618,16 +516,6 @@ int cnotify_test_stream_close(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	memory_free(
-	 filename );
-#endif
-
-	filename = NULL;
 
 #if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 	/* Test libcnotify_stream_close with fclose failing
@@ -665,16 +553,6 @@ on_error:
 		libcerror_error_free(
 		 &error );
 	}
-#if !defined( WINAPI ) || defined( __CYGWIN__ )
-	/* tempnam() will return a newly allocated string
-	 * _tempnam() will return a static string
-	 */
-	if( filename != NULL )
-	{
-		memory_free(
-		 filename );
-	}
-#endif
 	return( 0 );
 }
 

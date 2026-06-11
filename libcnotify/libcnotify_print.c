@@ -76,22 +76,10 @@ int VARARGS(
 	 char *,
 	 format );
 
-#if defined( HAVE_GLIB_H )
-	g_logv(
-	 G_LOG_DOMAIN,
-	 G_LOG_LEVEL_MESSAGE,
-	 format,
-	 argument_list );
-
-#else
-	/* TODO handle narrow and wide streams
-	 * for multi platform support
-	 */
-	print_count = file_stream_vfprintf(
+	print_count = vfprintf(
 		       libcnotify_stream,
 		       format,
 		       argument_list );
-#endif
 
 	VAEND(
 	 argument_list );
