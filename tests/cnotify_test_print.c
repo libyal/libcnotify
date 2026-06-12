@@ -48,49 +48,6 @@
 
 #include "../libcnotify/libcnotify_print.h"
 
-#if defined( HAVE_FMEMOPEN )
-#define cnotify_test_fmemopen fmemopen
-#else
-
-/* Fallback implementation of fmemopen
- */
-FILE *cnotify_test_fmemopen(
-       void *buffer,
-       size_t size,
-       const char *mode )
-{
-	FILE *stream = NULL;
-
-	if( buffer == NULL )
-	{
-		return( NULL );
-	}
-	if( mode == NULL )
-	{
-		return( NULL );
-	}
-	stream = tmpfile();
-
-	if( stream == NULL )
-	{
-		return( NULL );
-	}
-	if( setvbuf(
-	     stream,
-	     buffer,
-	     _IOFBF,
-	     size ) != 0 )
-	{
-		fclose(
-		 stream );
-
-		return( NULL );
-	}
-	return( stream );
-}
-
-#endif /* defined( HAVE_FMEMOPEN ) */
-
 #if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 
 static int (*cnotify_test_real_vfprintf)(FILE *, const char *, va_list) = NULL;
@@ -138,14 +95,100 @@ int vfprintf(
 
 #endif /* defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK ) */
 
+/* Compares the contents of the stream with the expected data and rewinds the stream
+ * Returns 1 if successful or 0 if not
+ */
+int cnotify_test_compare_buffer(
+     FILE *stream,
+     const char *expected_data,
+     size_t expected_data_size )
+{
+	char buffer[ 512 ];
+
+	ssize_t read_count = 0;
+	int result         = 0;
+
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "stream",
+	 stream );
+
+	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
+	 "expected_data",
+	 expected_data );
+
+	if( expected_data_size > 512 )
+	{
+		return( 0 );
+	}
+	result = fflush(
+	          stream );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	result = fseek(
+	          stream,
+	          0,
+	          SEEK_SET );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	memory_set(
+	 buffer,
+	 0,
+	 512 );
+
+	read_count = fread(
+	              buffer,
+		      1,
+		      expected_data_size,
+	              stream );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_SSIZE(
+	 "read_count",
+	 read_count,
+	 (ssize_t) expected_data_size );
+
+	result = fseek(
+	          stream,
+	          0,
+	          SEEK_SET );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	clearerr(
+	 stream );
+
+	result = narrow_string_compare(
+	          buffer,
+	          expected_data,
+	          expected_data_size );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+
+	return( 1 );
+
+on_error:
+	return( 0 );
+}
+
 /* Tests the libcnotify_printf function
  * Returns 1 if successful or 0 if not
  */
 int cnotify_test_printf(
      void )
 {
-	char buffer[ 512 ];
-
 	FILE *stream             = NULL;
 	libcerror_error_t *error = NULL;
 	int print_count          = 0;
@@ -153,10 +196,7 @@ int cnotify_test_printf(
 
 	/* Initialize test
 	 */
-	stream = cnotify_test_fmemopen(
-	          buffer,
-	          512,
-	          "w+b" );
+	stream = tmpfile();
 
 	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
 	 "stream",
@@ -185,23 +225,10 @@ int cnotify_test_printf(
 	 print_count,
 	 4 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "Test",
-	          4 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "Test",
+	 4 );
 
 	/* Test error cases
 	 */
@@ -209,9 +236,6 @@ int cnotify_test_printf(
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 1;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_printf(
 	               "Test" );
@@ -243,9 +267,6 @@ int cnotify_test_printf(
 	CNOTIFY_TEST_ASSERT_IS_NULL(
 	 "error",
 	 error );
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_printf(
 	               "Test" );
@@ -291,8 +312,6 @@ on_error:
 int cnotify_test_print_data_as_character(
      void )
 {
-	char buffer[ 512 ];
-
 	FILE *stream             = NULL;
 	libcerror_error_t *error = NULL;
 	int print_count          = 0;
@@ -300,10 +319,7 @@ int cnotify_test_print_data_as_character(
 
 	/* Initialize test
 	 */
-	stream = cnotify_test_fmemopen(
-	          buffer,
-	          512,
-	          "w+b" );
+	stream = tmpfile();
 
 	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
 	 "stream",
@@ -334,26 +350,10 @@ int cnotify_test_print_data_as_character(
 	 print_count,
 	 1 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "A",
-	          1 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "A",
+	 1 );
 
 	print_count = libcnotify_print_data_as_character(
 	               (uint8_t) 0x8c );
@@ -363,23 +363,10 @@ int cnotify_test_print_data_as_character(
 	 print_count,
 	 1 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          ".",
-	          1 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
+	cnotify_test_compare_buffer(
+	 stream,
+	 ".",
+	 1 );
 
 	/* Test error cases
 	 */
@@ -387,9 +374,6 @@ int cnotify_test_print_data_as_character(
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 1;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data_as_character(
 	               (uint8_t) 'A' );
@@ -441,7 +425,6 @@ on_error:
 int cnotify_test_print_data_as_characters(
      void )
 {
-	char buffer[ 512 ];
 	uint8_t data[ 60 ];
 
 	FILE *stream             = NULL;
@@ -452,10 +435,7 @@ int cnotify_test_print_data_as_characters(
 
 	/* Initialize test
 	 */
-	stream = cnotify_test_fmemopen(
-	          buffer,
-	          512,
-	          "w+b" );
+	stream = tmpfile();
 
 	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
 	 "stream",
@@ -494,26 +474,10 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 17 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "........ ........",
-	          17 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "........ ........",
+	 17 );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -525,26 +489,10 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 13 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "`bdfhjln prtv",
-	          13 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "`bdfhjln prtv",
+	 13 );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -556,26 +504,10 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 8 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "`bdfhjln",
-	          8 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "`bdfhjln",
+	 8 );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -587,26 +519,10 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 6 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "`bdfhjl",
-	          6 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "`bdfhjl",
+	 6 );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -620,9 +536,6 @@ int cnotify_test_print_data_as_characters(
 
 	/* Test error cases
 	 */
-	rewind(
-	 stream );
-
 	print_count = libcnotify_print_data_as_characters(
 	               NULL,
 	               60,
@@ -637,9 +550,6 @@ int cnotify_test_print_data_as_characters(
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 0;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -658,9 +568,6 @@ int cnotify_test_print_data_as_characters(
 		 -1 );
 	}
 	cnotify_test_vfprintf_attempts_before_fail = 8;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -714,7 +621,6 @@ on_error:
 int cnotify_test_print_data_as_hexadecimal(
      void )
 {
-	char buffer[ 512 ];
 	uint8_t data[ 60 ];
 
 	FILE *stream             = NULL;
@@ -725,10 +631,7 @@ int cnotify_test_print_data_as_hexadecimal(
 
 	/* Initialize test
 	 */
-	stream = cnotify_test_fmemopen(
-	          buffer,
-	          512,
-	          "w+b" );
+	stream = tmpfile();
 
 	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
 	 "stream",
@@ -767,26 +670,10 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 49 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "00 02 04 06 08 0a 0c 0e  10 12 14 16 18 1a 1c 1e ",
-	          49 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "00 02 04 06 08 0a 0c 0e  10 12 14 16 18 1a 1c 1e ",
+	 49 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -798,26 +685,10 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 49 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "60 62 64 66 68 6a 6c 6e  70 72 74 76             ",
-	          49 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "60 62 64 66 68 6a 6c 6e  70 72 74 76             ",
+	 49 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -829,26 +700,10 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 49 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "60 62 64 66 68 6a 6c 6e                          ",
-	          49 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "60 62 64 66 68 6a 6c 6e                          ",
+	 49 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -860,26 +715,10 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 49 );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          "60 62 64 66 68 6a                                ",
-	          49 );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	rewind(
-	 stream );
+	cnotify_test_compare_buffer(
+	 stream,
+	 "60 62 64 66 68 6a                                ",
+	 49 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -893,9 +732,6 @@ int cnotify_test_print_data_as_hexadecimal(
 
 	/* Test error cases
 	 */
-	rewind(
-	 stream );
-
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               NULL,
 	               60,
@@ -910,9 +746,6 @@ int cnotify_test_print_data_as_hexadecimal(
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 0;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -931,9 +764,6 @@ int cnotify_test_print_data_as_hexadecimal(
 		 -1 );
 	}
 	cnotify_test_vfprintf_attempts_before_fail = 8;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -953,9 +783,6 @@ int cnotify_test_print_data_as_hexadecimal(
 	}
 	cnotify_test_vfprintf_attempts_before_fail = 7;
 
-	rewind(
-	 stream );
-
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
 	               7,
@@ -973,9 +800,6 @@ int cnotify_test_print_data_as_hexadecimal(
 		 -1 );
 	}
 	cnotify_test_vfprintf_attempts_before_fail = 8;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -1031,7 +855,6 @@ on_error:
 int cnotify_test_print_data(
      void )
 {
-	char buffer[ 512 ];
 	uint8_t data[ 128 ];
 
 	FILE *stream                = NULL;
@@ -1044,10 +867,7 @@ int cnotify_test_print_data(
 
 	/* Initialize test
 	 */
-	stream = cnotify_test_fmemopen(
-	          buffer,
-	          512,
-	          "w+b" );
+	stream = tmpfile();
 
 	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
 	 "stream",
@@ -1094,29 +914,13 @@ int cnotify_test_print_data(
 	 print_count,
 	 expected_buffer_length );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          expected_buffer,
-	          expected_buffer_length );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
+	cnotify_test_compare_buffer(
+	 stream,
+	 expected_buffer,
+	 expected_buffer_length );
 
 	/* Test error cases
 	 */
-	rewind(
-	 stream );
-
 	print_count = libcnotify_print_data(
 	               NULL,
 	               60,
@@ -1126,9 +930,6 @@ int cnotify_test_print_data(
 	 "print_count",
 	 print_count,
 	 -1 );
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data(
 	               data,
@@ -1144,9 +945,6 @@ int cnotify_test_print_data(
 	/* Test libcnotify_printf with vfprintf failing in libcnotify_printf
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 0;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data(
 	               data,
@@ -1168,9 +966,6 @@ int cnotify_test_print_data(
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 1;
 
-	rewind(
-	 stream );
-
 	print_count = libcnotify_print_data(
 	               data,
 	               16,
@@ -1190,9 +985,6 @@ int cnotify_test_print_data(
 	/* Test libcnotify_printf with vfprintf failing in libcnotify_printf
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 18;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data(
 	               data,
@@ -1214,9 +1006,6 @@ int cnotify_test_print_data(
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 19;
 
-	rewind(
-	 stream );
-
 	print_count = libcnotify_print_data(
 	               data,
 	               16,
@@ -1237,9 +1026,6 @@ int cnotify_test_print_data(
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 36;
 
-	rewind(
-	 stream );
-
 	print_count = libcnotify_print_data(
 	               data,
 	               16,
@@ -1259,9 +1045,6 @@ int cnotify_test_print_data(
 	/* Test libcnotify_printf with vfprintf failing in libcnotify_printf
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 37;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data(
 	               data,
@@ -1293,9 +1076,6 @@ int cnotify_test_print_data(
 	 'Y',
 	 120 - 108 );
 
-	rewind(
-	 stream );
-
 	print_count = libcnotify_print_data(
 	               data,
 	               120,
@@ -1312,9 +1092,6 @@ int cnotify_test_print_data(
 	/* Test libcnotify_printf with vfprintf failing
 	 */
 	cnotify_test_vfprintf_attempts_before_fail = 1;
-
-	rewind(
-	 stream );
 
 	print_count = libcnotify_print_data(
 	               data,
@@ -1395,8 +1172,6 @@ on_error:
 int cnotify_test_print_error_backtrace(
      void )
 {
-	char buffer[ 512 ];
-
 	FILE *stream                  = NULL;
 	libcerror_error_t *error      = NULL;
 	libcerror_error_t *test_error = NULL;
@@ -1407,10 +1182,7 @@ int cnotify_test_print_error_backtrace(
 
 	/* Initialize test
 	 */
-	stream = cnotify_test_fmemopen(
-	          buffer,
-	          512,
-	          "w+b" );
+	stream = tmpfile();
 
 	CNOTIFY_TEST_ASSERT_IS_NOT_NULL(
 	 "stream",
@@ -1457,23 +1229,10 @@ int cnotify_test_print_error_backtrace(
 	 print_count,
 	 expected_buffer_length );
 
-	result = fflush(
-	          stream );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
-
-	result = narrow_string_compare(
-	          buffer,
-	          expected_buffer,
-	          expected_buffer_length );
-
-	CNOTIFY_TEST_ASSERT_EQUAL_INT(
-	 "result",
-	 result,
-	 0 );
+	cnotify_test_compare_buffer(
+	 stream,
+	 expected_buffer,
+	 expected_buffer_length );
 
 	/* Test print without stream
 	 */
