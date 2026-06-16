@@ -58,10 +58,7 @@
 #if defined( HAVE_CNOTIFY_TEST_FUNCTION_HOOK )
 
 static FILE *(*cnotify_test_real_fopen)(const char *, const char *) = NULL;
-static int (*cnotify_test_real_fclose)(FILE *)                      = NULL;
-
 int cnotify_test_fopen_attempts_before_fail                         = -1;
-int cnotify_test_fclose_attempts_before_fail                        = -1;
 
 /* Custom fopen for testing memory error cases
  * Returns a pointer to newly allocated data or NULL
@@ -94,6 +91,9 @@ FILE *fopen(
 
 	return( stream );
 }
+
+static int (*cnotify_test_real_fclose)(FILE *) = NULL;
+int cnotify_test_fclose_attempts_before_fail   = -1;
 
 /* Custom fclose for testing memory error cases
  * Returns a pointer to newly allocated data or NULL

@@ -98,7 +98,7 @@ int vfprintf(
 /* Compares the contents of the stream with the expected data and rewinds the stream
  * Returns 1 if successful or 0 if not
  */
-int cnotify_test_compare_buffer(
+int cnotify_test_compare_stream(
      FILE *stream,
      const char *expected_data,
      size_t expected_data_size )
@@ -225,10 +225,15 @@ int cnotify_test_printf(
 	 print_count,
 	 4 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "Test",
-	 4 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "Test",
+	          4 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	/* Test error cases
 	 */
@@ -350,9 +355,14 @@ int cnotify_test_print_data_as_character(
 	 print_count,
 	 1 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "A",
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "A",
+	          1 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
 	 1 );
 
 	print_count = libcnotify_print_data_as_character(
@@ -363,9 +373,14 @@ int cnotify_test_print_data_as_character(
 	 print_count,
 	 1 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 ".",
+	result = cnotify_test_compare_stream(
+	          stream,
+	          ".",
+	          1 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
 	 1 );
 
 	/* Test error cases
@@ -474,10 +489,15 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 17 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "........ ........",
-	 17 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "........ ........",
+	          17 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -489,10 +509,15 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 13 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "`bdfhjln prtv",
-	 13 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "`bdfhjln prtv",
+	          13 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -504,10 +529,15 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 8 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "`bdfhjln",
-	 8 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "`bdfhjln",
+	          8 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -519,10 +549,15 @@ int cnotify_test_print_data_as_characters(
 	 print_count,
 	 6 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "`bdfhjl",
-	 6 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "`bdfhjl",
+	          6 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	print_count = libcnotify_print_data_as_characters(
 	               data,
@@ -670,10 +705,15 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 49 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "00 02 04 06 08 0a 0c 0e  10 12 14 16 18 1a 1c 1e ",
-	 49 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "00 02 04 06 08 0a 0c 0e  10 12 14 16 18 1a 1c 1e ",
+	          49 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -685,10 +725,15 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 49 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "60 62 64 66 68 6a 6c 6e  70 72 74 76             ",
-	 49 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "60 62 64 66 68 6a 6c 6e  70 72 74 76             ",
+	          49 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -700,10 +745,15 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 49 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "60 62 64 66 68 6a 6c 6e                          ",
-	 49 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "60 62 64 66 68 6a 6c 6e                          ",
+	          49 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -715,10 +765,15 @@ int cnotify_test_print_data_as_hexadecimal(
 	 print_count,
 	 49 );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 "60 62 64 66 68 6a                                ",
-	 49 );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          "60 62 64 66 68 6a                                ",
+	          49 );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	print_count = libcnotify_print_data_as_hexadecimal(
 	               data,
@@ -914,10 +969,15 @@ int cnotify_test_print_data(
 	 print_count,
 	 expected_buffer_length );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 expected_buffer,
-	 expected_buffer_length );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          expected_buffer,
+	          expected_buffer_length );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	/* Test error cases
 	 */
@@ -1229,10 +1289,15 @@ int cnotify_test_print_error_backtrace(
 	 print_count,
 	 expected_buffer_length );
 
-	cnotify_test_compare_buffer(
-	 stream,
-	 expected_buffer,
-	 expected_buffer_length );
+	result = cnotify_test_compare_stream(
+	          stream,
+	          expected_buffer,
+	          expected_buffer_length );
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 1 );
 
 	/* Test print without stream
 	 */
