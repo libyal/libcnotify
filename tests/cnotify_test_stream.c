@@ -138,24 +138,38 @@ int cnotify_test_stream_set(
 	libcerror_error_t *error = NULL;
 	int result               = 0;
 
+#if !defined( _MSC_VER ) && !defined( __MINGW32__ )
+	int test_file_descriptor = 0;
+#endif
+
 	/* Initialize test
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
+#if defined( _MSC_VER ) || defined( __MINGW32__ )
 	result = _mktemp_s(
 	          filename,
 	          16 );
-#else
-	result = mkstemp(
-	          filename );
-#endif
-	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
+	 0 );
+#else
+	test_file_descriptor = mkstemp(
+	                        filename );
+
+	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+	 "test_file_descriptor",
+	 test_file_descriptor,
 	 -1 );
 
-	close(
-	 result );
+	result = close(
+	          test_file_descriptor );
 
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+#endif
 	/* Test set of stderr
 	 */
 	result = libcnotify_stream_set(
@@ -279,24 +293,38 @@ int cnotify_test_stream_open(
 	libcerror_error_t *error = NULL;
 	int result               = 0;
 
+#if !defined( _MSC_VER ) && !defined( __MINGW32__ )
+	int test_file_descriptor = 0;
+#endif
+
 	/* Initialize test
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
+#if defined( _MSC_VER ) || defined( __MINGW32__ )
 	result = _mktemp_s(
 	          filename,
 	          16 );
-#else
-	result = mkstemp(
-	          filename );
-#endif
-	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
+	 0 );
+#else
+	test_file_descriptor = mkstemp(
+	                        filename );
+
+	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+	 "test_file_descriptor",
+	 test_file_descriptor,
 	 -1 );
 
-	close(
-	 result );
+	result = close(
+	          test_file_descriptor );
 
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+#endif
 	/* Test open
 	 */
 	result = libcnotify_stream_open(
@@ -443,24 +471,38 @@ int cnotify_test_stream_close(
 	libcerror_error_t *error = NULL;
 	int result               = 0;
 
+#if !defined( _MSC_VER ) && !defined( __MINGW32__ )
+	int test_file_descriptor = 0;
+#endif
+
 	/* Initialize test
 	 */
-#if defined( WINAPI ) && !defined( __CYGWIN__ )
+#if defined( _MSC_VER ) || defined( __MINGW32__ )
 	result = _mktemp_s(
 	          filename,
 	          16 );
-#else
-	result = mkstemp(
-	          filename );
-#endif
-	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
 	 "result",
 	 result,
+	 0 );
+#else
+	test_file_descriptor = mkstemp(
+	                        filename );
+
+	CNOTIFY_TEST_ASSERT_NOT_EQUAL_INT(
+	 "test_file_descriptor",
+	 test_file_descriptor,
 	 -1 );
 
-	close(
-	 result );
+	result = close(
+	          test_file_descriptor );
 
+	CNOTIFY_TEST_ASSERT_EQUAL_INT(
+	 "result",
+	 result,
+	 0 );
+#endif
 	/* Test close after open
 	 */
 	result = libcnotify_stream_close(

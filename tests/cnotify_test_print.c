@@ -1270,7 +1270,7 @@ int cnotify_test_print_error_backtrace(
 	 "error",
 	 error );
 
-#if defined( WINAPI )
+#if defined( WINAPI ) || defined( __MINGW32__ )
 	expected_buffer = \
 		"cnotify_test_print_error_backtrace: invalid filename.\r\n";
 
