@@ -2,7 +2,7 @@ AC_PREREQ([2.71])
 
 AC_INIT(
   [libcnotify],
-  [20260624],
+  [20260703],
   [https://github.com/libyal/libcnotify/issues])
 
 AC_CONFIG_SRCDIR(
